@@ -22,9 +22,6 @@ class Help extends CommandExecutor {
 
 
 module.exports = {
-  plugin: {
-    './plugin/commands': {}
-  },
   commands: {
     'B站直播': blive,
     '高亮': highlights,

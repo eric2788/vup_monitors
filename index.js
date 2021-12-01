@@ -1,24 +1,13 @@
 const { ws, http } = require('./bot')
-const config = require('./config')
+const onCommand = require('./command_listener')
 const messager = require('./el/api/message-source')
 
-const plugins = Object.keys(config.plugin).map(name =>
-  require(name)(config.plugin[name] || {})
-)
-
-console.log(`已加载 ${plugins.length} 个插件。`)
-
-async function executePlugins(data) {
-  for (const plugin of plugins) {
-    try {
-      const result = await plugin({ data, ws, http })
-      if (result) { // 停止往下执行
-        break
-      }
-    } catch (err) {
-      console.warn(`执行插件时出现错误: ${err?.message}`)
-      console.error(err)
-    }
+async function executeCommands(data) {
+  try {
+    await onCommand({ data, ws, http })
+  } catch (err) {
+    console.warn(`执行指令时出现错误: ${err?.message}`)
+    console.error(err)
   }
 }
 
@@ -30,7 +19,7 @@ Promise.all([ ws.startWS(), messager.connect()])
       if (process.env.NODE_ENV === 'development') {
         console.log(data)
       }
-      executePlugins(data)
+      executeCommands(data)
     })
   })
   .catch(console.error)
