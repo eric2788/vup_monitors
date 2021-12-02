@@ -1,6 +1,6 @@
 const WebSocket = require('ws')
 const config = require('../config')
-const { bot } = require('../data/settings.json')
+const { bot } = require('../el/data-storer').settings
 const { sleep } = require('../el/utils')
 
 
@@ -9,12 +9,12 @@ async function connect(){
 
   return new Promise((res, rej) => {
     ws.on('error', err => {
-      console.warn(`连接 WS 时出现错误: ${err?.message ?? err}`)
+      console.warn(`连接 go-cqhttp 时出现错误: ${err?.message ?? err}`)
       rej(err)
     })
 
     ws.on('open', () => {
-      console.log(`WS 连接成功。`)
+      console.log(`go-cqhttp 连接成功。`)
       res(ws)
     })
   })

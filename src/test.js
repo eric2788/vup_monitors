@@ -1,6 +1,6 @@
 const { invoke } = require('./el/command-manager')
 const readline = require("readline");
-const { connect } = require('./el/redis_api');
+const { connect } = require('./el/api/message-source');
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout

@@ -1,13 +1,23 @@
-FROM node:17-alpine
+FROM node:16 AS builder
 
 WORKDIR /app
 
-RUN cd /app
-
-COPY . .
-
-VOLUME [ "/app/data" ]
+COPY ./src ./src
+COPY *.json .
 
 RUN npm install
+RUN npm install pkg -g
+RUN pkg .
 
-CMD ["npm", "run", "start"]
+FROM ubuntu:latest
+
+WORKDIR /
+
+ENV NODE_ENV=production
+
+COPY --from=builder /app/dist/vup_monitors-linux /vup_monitors
+RUN chmod +x /vup_monitors
+
+VOLUME [ "/data" ]
+
+ENTRYPOINT [ "/vup_monitors" ]

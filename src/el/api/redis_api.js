@@ -1,5 +1,5 @@
 const { createClient } = require('redis');
-const settings = require('../../data/settings.json')
+const settings = require('../data-storer').settings
 const utils = require('../utils');
 
 const { handleMessage } = require('../message-handler');
