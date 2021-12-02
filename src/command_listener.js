@@ -1,5 +1,5 @@
 const { invoke } = require('./el/command-manager')
-const { owners } = require('./data/settings.json')
+const { owners } = require('./el/data-storer').settings
 const { commands } = require('./config')
 
 module.exports = async({data, ws, http}) => {

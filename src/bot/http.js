@@ -1,5 +1,5 @@
 const axios = require('axios')
-const config = require('../data/settings.json')
+const config = require('../el/data-storer').settings
 
 const http = axios.create({
   baseURL: config.bot.http,

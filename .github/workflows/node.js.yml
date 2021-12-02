@@ -1,6 +1,6 @@
 name: Build Executable And Publish
 env:
-  version: 0.1.2
+  version: 0.1.3
   artifact_name: vup_monitors
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

@@ -1,5 +1,5 @@
 const WebSocket = require('ws')
-const { websocket } = require('../../data/settings.json')
+const { websocket } = require('../data-storer').settings
 const utils = require('../utils')
 const { default: axios } = require('axios')
 const FormData = require('form-data')
@@ -68,6 +68,7 @@ class WebSocketSouce extends MessageSource {
     }
 
     async listenAll(rooms){
+        if (rooms.length == 0) return
         const form = new FormData()
         for (const room of rooms){
             form.append('subscribes', room)

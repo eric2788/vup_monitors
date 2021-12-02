@@ -3,4 +3,7 @@
 
 ### 更新
 
-- 刪除插件模塊機制
+- 把所有js檔案放入 src folder
+- 更新 readme.md
+- 修复无法读取外部 data/settings.json
+- reduce docker image size

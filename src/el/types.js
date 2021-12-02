@@ -34,6 +34,7 @@ class MessageSource {
     }
 
     async listenAll(rooms){
+        if (rooms.length == 0) return
         for (const room of rooms) {
             await this.listen(room, false)
         }
