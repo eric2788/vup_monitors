@@ -110,4 +110,4 @@ B站直播WS讯息监控指令
 
 ## 鸣谢
 
-详见 forked from
+[go-cqhttp/node](https://github.com/go-cqhttp/node)
