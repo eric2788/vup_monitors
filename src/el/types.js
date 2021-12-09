@@ -77,6 +77,7 @@ class MessageSource {
         const blive = data['blive']
         const rooms = blive.subscribing ?? []
         try {
+            this.subscribing = new Set(rooms)
             await this.listenAll(rooms)
         } catch (err) {
             console.warn(`从离线新增订阅时出现错误: ${err}, 五秒后重试`)
