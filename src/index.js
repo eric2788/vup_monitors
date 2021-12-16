@@ -18,7 +18,7 @@ console.log(`已设置管理员QQ号: ${owners}, 群管和管理员都可使用�
 console.log('正在启动 vup monitors...')
 Promise.all([ws.startWS(), messager.connect()])
   .then(() => {
-    ws.listen(data => {
+    ws.setListener(data => {
       if (process.env.NODE_ENV === 'development') {
         console.log(data)
       }
