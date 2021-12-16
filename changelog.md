@@ -3,7 +3,7 @@
 
 ### 更新
 
-- 把所有js檔案放入 src folder
-- 更新 readme.md
-- 修复无法读取外部 data/settings.json
-- reduce docker image size
+- 新增 go-cqhttp 自動重連機制。(之前因為沒有重連機制，在 go-cqhttp 重啟之後整個 vup_monitors 程序會失效直到重新啟動。)
+
+- 縮小 Docker Image 佔用空間 (500MB -> 154MB)
+
