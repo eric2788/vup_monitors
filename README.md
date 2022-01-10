@@ -27,9 +27,16 @@
 
 ### biligo-live-ws
 
+#### 使用自架
+
 - 在 https://github.com/eric2788/biligo-live-ws/releases 下载对应平台的可执行文件
 
 - 运行程序
+
+#### 不使用自架
+
+- 到 https://github.com/eric2788/biligo-live-ws 查看公共API地址
+
 
 ### 本项目 (Vup_monitors)
 
@@ -39,6 +46,7 @@
 
 - 到 `data/settings.json` 填入设定，包括
     - 设定数据源 `source` 为 `websocket`
+    - websocket 中 填入你自架的 biligo-live-ws 或使用 公共API地址 (如果使用公共API，則需要 `use-tls: true`)
     - 在管理员 `owners` 的设定中添加你的 QQ 号
     - 填入你在 go-cqhttp 中启用正向 Websocket 的端口 (如非6700)
 
