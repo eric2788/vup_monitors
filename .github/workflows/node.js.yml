@@ -1,6 +1,6 @@
 name: Build Executable And Publish
 env:
-  version: 0.1.5
+  version: 0.1.6
   artifact_name: vup_monitors
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -30,32 +30,19 @@ jobs:
         name: ${{ env.artifact_name }}
         path: dist
 
-    - name: Delete tag and release
-      id: delete-tag-release
-      uses: dev-drprasad/delete-tag-and-release@v0.1.2
-      with:
-        tag_name: ${{ env.version }}
-        delete_release: true
-
     - name: zip the directory
       run: |
         zip -r ${{ env.artifact_name }}.zip ./dist
     
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      with:
-        tag_name: ${{ env.version }}
-        release_name: Release ${{ github.repository }}-${{ env.version }}
-        body_path: changelog.md
-        draft: false
-        prerelease: false
+    - name: Get release
+      id: get_release
+      uses: bruceadams/get-release@v1.2.3
 
     - name: Upload Release
       id: upload-release-zip
       uses: actions/upload-release-asset@v1
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+        upload_url: ${{ steps.get_release.outputs.upload_url }}
         asset_path: ./${{ env.artifact_name }}.zip
         asset_name: ${{ env.artifact_name }}.zip
         asset_content_type: application/zip
