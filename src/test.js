@@ -1,6 +1,8 @@
 const { invoke } = require('./el/command-manager')
 const readline = require("readline");
-const { connect } = require('./el/api/message-source');
+const { default: axios } = require('axios')
+const { commands } = require('./config')
+const messager = require('./el/api/message-source');
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -30,21 +32,31 @@ async function testCommands(){
         const [cmd, ...args] = command
 
         try {
-            const result = await invoke({
+            await invoke({
                 send: (msg) => console.log(`发送讯息: ${msg}`),
-                data: { group_id }
+                data: { group_id },
+                commands
             }, cmd, args)
-            console.log(result ? '执行成功' : '没有此指令')
         }catch(err){
             console.error(err)
         }
     }
 }
 
-async function test(){
-    await connect()
+async function testCommand(){
+    await messager.connect()
     await testCommands()
 }
 
+async function testRequestWithoutCors(){
+    const api = axios.create({
+        baseURL: 'https://api.github.com/repos/eric2788/vup_monitors/',
+        timeout: 5000
+    })
 
-test().catch(console.error)
+    const res = await api.get('/releases/latest')
+    console.log(res.data)
+}
+
+testCommand().catch(console.error)
+//testRequestWithoutCors().catch(console.error)

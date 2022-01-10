@@ -9,9 +9,10 @@
         "database": 0
     },
     "websocket": {
-        "host": "localhost:8080",
-        "use-tls": false
+        "host": "blive-jp.ericlamm.xyz",
+        "use-tls": true
     },
     "source": "websocket",
-    "owners": []
+    "owners": [],
+    "enable_live_braodcast": false
 }

@@ -23,11 +23,20 @@
 
 - 运行 `go-cqhttp`, 根据提示填写 QQ 号和密码等信息, 参考文档 https://docs.go-cqhttp.org/guide/quick_start.html
 
+- 啟用正向 Websocket (这点很重要，不然之后无法连接到 go-cqhttp)
+
 ### biligo-live-ws
+
+#### 使用自架
 
 - 在 https://github.com/eric2788/biligo-live-ws/releases 下载对应平台的可执行文件
 
 - 运行程序
+
+#### 不使用自架
+
+- 到 https://github.com/eric2788/biligo-live-ws 查看公共API地址
+
 
 ### 本项目 (Vup_monitors)
 
@@ -37,7 +46,9 @@
 
 - 到 `data/settings.json` 填入设定，包括
     - 设定数据源 `source` 为 `websocket`
+    - websocket 中 填入你自架的 biligo-live-ws 或使用 公共API地址 (如果使用公共API，則需要 `use-tls: true`)
     - 在管理员 `owners` 的设定中添加你的 QQ 号
+    - 填入你在 go-cqhttp 中启用正向 Websocket 的端口 (如非6700)
 
 - 再运行程序
 
@@ -53,6 +64,8 @@
 ## 指令
 
 `<>` 为必填参数， `[]` 为选填参数
+
+**真正填入参数时不需要加引号**
 
 ### !B站直播
 
@@ -101,6 +114,12 @@ B站直播WS讯息监控指令
 | 在注视名单内 | 在注视名单内 | ✔ |
 
 如果没有注视用户，则默认广播所有高亮用户在监控中的直播间的DD行为。
+
+### 启用开播通知 (v0.1.6 版本)
+
+到 `settings.json` 设置 `enable_live_broadcast: true` 即可。
+
+注意，有注视用户的群组将会限制仅限该注视用户开播才会广播通知，而其他没有注视用户的群组/私聊则以高亮用户开播为准。
 
 ## 其他部署方式
 

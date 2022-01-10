@@ -24,7 +24,8 @@ const DEFAULT_CONFIG = {
         "use-tls": false
     },
     "source": "websocket",
-    "owners": []
+    "owners": [],
+    "enable_live_braodcast": false
 }
 
 

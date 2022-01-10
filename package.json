@@ -1,6 +1,6 @@
 {
   "name": "vup_monitors",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "bin": "src/index.js",
   "main": "src/index.js",
   "scripts": {
@@ -22,7 +22,8 @@
     ],
     "targets": [
       "node16-win-x64",
-      "node16-linux"
+      "node16-linux",
+      "node16-linux-arm64"
     ],
     "outputPath": "dist"
   },
