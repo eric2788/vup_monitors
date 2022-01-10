@@ -5,6 +5,7 @@ go-cqhttp/*
 !go-cqhttp/.gitkeep
 
 /dist/
+/data/
 
 .DS_Store
 yarn.lock

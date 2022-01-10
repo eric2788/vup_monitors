@@ -4,6 +4,7 @@ const { CommandExecutor } = require('./el/types')
 const blive = require('./commands/blive')
 const highlights = require('./commands/highlights')
 const focus = require('./commands/focus')
+const checkUpdate = require('./commands/check_update')
 
 // ws handles
 const danmu_msg = require('./ws_handles/dammu_msg')
@@ -26,7 +27,8 @@ module.exports = {
     'B站直播': blive,
     '高亮': highlights,
     '注视': focus,
-    'help': Help
+    'help': Help,
+    '检查更新': checkUpdate 
   },
   ws_handles: {
     'DANMU_MSG': danmu_msg,
