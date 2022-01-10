@@ -23,6 +23,8 @@
 
 - 运行 `go-cqhttp`, 根据提示填写 QQ 号和密码等信息, 参考文档 https://docs.go-cqhttp.org/guide/quick_start.html
 
+- 啟用正向 Websocket (这点很重要，不然之后无法连接到 go-cqhttp)
+
 ### biligo-live-ws
 
 - 在 https://github.com/eric2788/biligo-live-ws/releases 下载对应平台的可执行文件
@@ -38,6 +40,7 @@
 - 到 `data/settings.json` 填入设定，包括
     - 设定数据源 `source` 为 `websocket`
     - 在管理员 `owners` 的设定中添加你的 QQ 号
+    - 填入你在 go-cqhttp 中启用正向 Websocket 的端口 (如非6700)
 
 - 再运行程序
 
@@ -53,6 +56,8 @@
 ## 指令
 
 `<>` 为必填参数， `[]` 为选填参数
+
+**真正填入参数时不需要加引号**
 
 ### !B站直播
 

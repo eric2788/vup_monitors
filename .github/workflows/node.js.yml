@@ -5,8 +5,8 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
-  push:
-    branches: [ master ]
+  release:
+   types: [ created ]
 
 jobs:
   build:
