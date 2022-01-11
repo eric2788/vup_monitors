@@ -28,8 +28,8 @@ module.exports = async ({ws, http}, data) => {
 
     const messages = [
         `${name} 正在B站直播`,
-        `標題: ${title}`,
-        `直播間: https://live.bilibili.com/${room_id}`
+        `标题: ${title}`,
+        `直播间: https://live.bilibili.com/${room_id}`
     ]
 
     if (cover){
