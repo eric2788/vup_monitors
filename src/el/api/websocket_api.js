@@ -74,7 +74,8 @@ class WebSocketSouce extends MessageSource {
             form.append('subscribes', room)
         }
         try {
-            await this.api.post('', form, { headers: form.getHeaders() })
+            // 透過調用 ?validate=false 來略過房間訊息檢查以防止412請求頻繁
+            await this.api.post('?validate=false', form, { headers: form.getHeaders() })
         }catch(err){
             throw new Error(err?.response?.data?.error ?? err?.response?.data ?? err)
         }

@@ -8,6 +8,8 @@ on:
   push:
     tags:
       - '*'
+    branches:
+      - 'master'
 
 jobs:
   publish_docker:
