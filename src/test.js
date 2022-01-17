@@ -2,6 +2,7 @@ const { invoke } = require('./el/command-manager')
 const readline = require("readline");
 const { default: axios } = require('axios')
 const { commands } = require('./config')
+const FormData = require('form-data')
 const messager = require('./el/api/message-source');
 const rl = readline.createInterface({
     input: process.stdin,
@@ -48,15 +49,18 @@ async function testCommand(){
     await testCommands()
 }
 
+// 獲取真實房間號
 async function testRequestWithoutCors(){
     const api = axios.create({
-        baseURL: 'https://api.github.com/repos/eric2788/vup_monitors/',
+        baseURL: 'https://blive-jp.ericlamm.xyz/subscribe',
         timeout: 5000
     })
 
-    const res = await api.get('/releases/latest')
-    console.log(res.data)
+    const form = new FormData()
+    form.append('subscribes', 255)
+    const res = await api.put('/add', form, { headers: form.getHeaders() })
+    console.log(res.data[0])
 }
 
-testCommand().catch(console.error)
-//testRequestWithoutCors().catch(console.error)
+//testCommand().catch(console.error)
+testRequestWithoutCors().catch(console.error)

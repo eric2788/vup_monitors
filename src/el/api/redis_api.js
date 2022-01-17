@@ -44,6 +44,7 @@ class RedisSource extends MessageSource {
 
     async listenInternal(room){
         await this.client.subscribe(`blive:${room}`, handleMessage)
+        return room
     }
 
     async unlistenInternal(room){

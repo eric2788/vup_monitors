@@ -50,7 +50,12 @@ class WebSocketSouce extends MessageSource {
         const form = new FormData()
         form.append('subscribes', room)
         try {
-            await this.api.put('/add', form, { headers: form.getHeaders() })
+            const res = await this.api.put('/add', form, { headers: form.getHeaders() })
+            if (res.data.length > 0) {
+                return res.data[0] // 返回真實房間號
+            } else {
+                throw new Error(`无效房间号: ${room}`)
+            }
         }catch(err){
             throw new Error(err?.response?.data?.error ?? err?.response?.data ?? err)
         }
