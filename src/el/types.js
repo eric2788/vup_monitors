@@ -52,8 +52,8 @@ class MessageSource {
 
     async listen(room, update_storage = true) {
         if (this.subscribing.has(room)) return false
-        await this.listenInternal(room)
-        this.subscribing.add(room)
+        const realRoom = await this.listenInternal(room)
+        this.subscribing.add(realRoom) // 加回真實房間號
         if (update_storage) {
             await update(data => {
                 data.blive.subscribing = [...this.subscribing]
