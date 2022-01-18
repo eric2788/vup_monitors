@@ -4,6 +4,12 @@ const storer = require('../el/data-storer')
 module.exports = async ({ ws, http }, data) => {
     const liveName = data.live_info.name
     const info = data.content.info
+
+    // 過濾抽獎和紅包彈幕
+    if (info[0][9] !== 0) {
+        return
+    }
+
     const danmaku = info[1]
     const [uid, uname] = info[2]
 
