@@ -1,6 +1,6 @@
 const { default: axios } = require('axios')
 
-const VERSION = '0.1.6'
+const VERSION = '0.1.7'
 
 const updaterApi = axios.create({
     baseURL: 'https://api.github.com/repos/eric2788/vup_monitors',

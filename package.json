@@ -1,6 +1,6 @@
 {
   "name": "vup_monitors",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "bin": "src/index.js",
   "main": "src/index.js",
   "scripts": {
