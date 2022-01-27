@@ -5,6 +5,8 @@ const { sendMessage, sendMessagePrivate, filterAndBroadcast } = require("../el/u
 module.exports = async ({ws, http}, data) => {
     
     if (!settings.enable_live_broadcast) return // 沒啟用廣播
+    // 不带live_time的是推流出现的标志，忽略
+    if (!data.content.live_time) return
 
     const { name, uid, cover, title, room_id } = data.live_info
 
@@ -27,12 +29,12 @@ module.exports = async ({ws, http}, data) => {
     group_ids.forEach((group_id) => group_highlight[group_id] = highlight[group_id])
 
     const messages = [
-        `${name} 正在B站直播`,
+        `${name} 开播了：`,
         `标题: ${title}`,
         `直播间: https://live.bilibili.com/${room_id}`
     ]
 
-    if (cover){
+    if (settings.show_cover && cover){
         messages.push(`[CQ:image,file=${cover}]`)
     }
 
@@ -40,7 +42,7 @@ module.exports = async ({ws, http}, data) => {
     const sends = filterAndBroadcast(group_highlight, uid, sendMessage, ws, messages)
     if (sends.length > 0) {
         Promise.all(sends)
-            .then(sent => console.log(`開播通知已发送给 ${sent.length} 个QQ群组。`))
+            .then(sent => console.log(`开播通知已发送给 ${sent.length} 个QQ群组。`))
             .catch(err => {
                 console.warn(`發送广播通知时出现错误: ${err?.message}`)
                 console.warn(err)
@@ -52,7 +54,7 @@ module.exports = async ({ws, http}, data) => {
     const private_sends = filterAndBroadcast(highlight_private, uid, sendMessagePrivate, ws, messages)
     if (private_sends.length > 0) {
         Promise.all(private_sends)
-            .then(sent => console.log(`開播通知已发送给 ${sent.length} 个QQ号`))
+            .then(sent => console.log(`开播通知已发送给 ${sent.length} 个QQ号。`))
             .catch(err => {
                 console.warn(`發送广播通知时出现错误: ${err?.message}`)
                 console.warn(err)

@@ -11,6 +11,7 @@ const danmu_msg = require('./ws_handles/dammu_msg')
 const room_enter = require('./ws_handles/room_enter')
 const superchat_msg = require('./ws_handles/superchat_msg')
 const live_broadcast = require('./ws_handles/live_broadcast')
+const live_end = require('./ws_handles/live_end')
 
 class Help extends CommandExecutor {
 
@@ -33,6 +34,7 @@ module.exports = {
   ws_handles: {
     'DANMU_MSG': danmu_msg,
     'LIVE': live_broadcast,
+    'PREPARING': live_end,
     'SUPER_CHAT_MESSAGE': superchat_msg,
     'INTERACT_WORD': room_enter
   }

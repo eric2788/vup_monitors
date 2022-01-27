@@ -25,7 +25,8 @@ const DEFAULT_CONFIG = {
     },
     "source": "websocket",
     "owners": [],
-    "enable_live_broadcast": false
+    "enable_live_broadcast": false,
+    "show_cover": true,
 }
 
 

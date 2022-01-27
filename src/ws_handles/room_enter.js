@@ -26,7 +26,7 @@ module.exports = async ({ws, http}, data) => {
 
     group_ids.forEach((group_id) => group_highlight[group_id] = highlight[group_id])
 
-    const messages =  `噔噔咚！你所关注的用户 ${uname} 进入了 ${liveName} 的直播间。`
+    const messages =  `噔噔咚！你所关注的用户 ${uname} 进入了` + (uname == liveName ? `自己` : ` ${liveName} `) + `的直播间。`
 
     // === 广播到群聊 ===
     const sends = filterAndBroadcast(group_highlight, uid, sendMessage, ws, messages)
