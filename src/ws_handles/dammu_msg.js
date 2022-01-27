@@ -11,6 +11,7 @@ module.exports = async ({ ws, http }, data) => {
     }
 
     const danmaku = info[1]
+    if (danmaku.includes('【')) return //严格：包含左角括号的一律认为是同传弹幕以应对联动场景
     const [uid, uname] = info[2]
 
     const blive = (await storer.read())?.blive
