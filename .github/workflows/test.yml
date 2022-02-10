@@ -20,7 +20,7 @@ jobs:
           node-version: 16.x
       - name: install dependencies
         run: |
-          npm ci
+          npm install
           npm install -g mocha
       - name: test the program
         run: npm run test
