@@ -7,8 +7,8 @@
     "nodemon:dev": "cross-env NODE_ENV=development nodemon src/index.js",
     "dev": "cross-env NODE_ENV=development node src/index.js",
     "start": "cross-env NODE_ENV=production node --trace-warnings src/index.js",
-    "nodemon:test": "cross-env NODE_ENV=development nodemon src/test.js",
-    "test": "cross-env NODE_ENV=development node src/test.js"
+    "simulate": "cross-env NODE_ENV=development node src/simulate.js",
+    "test": "mocha --exit"
   },
   "dependencies": {
     "axios": "^0.21.4",
@@ -33,6 +33,7 @@
     "@zhuweiyou/prettier-config": "^1.0.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.2.0",
+    "mocha": "^9.2.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.3.0"
   }

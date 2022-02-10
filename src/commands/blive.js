@@ -1,6 +1,6 @@
 const { CommandExecutor } = require("../el/types");
 const messager = require('../el/api/message-source')
-const { validRoom } = require('../el/utils')
+const { toRealRoom: validRoom } = require('../el/utils')
 class BLiveListen extends CommandExecutor {
 
 
@@ -15,14 +15,14 @@ class BLiveListen extends CommandExecutor {
             return
         }
 
-        const valid = await validRoom(room)
-        if (!valid) {
+        const realRoom = await validRoom(room)
+        if (realRoom == -1) {
             await send(`找不到房间 ${room}`)
             return
         }
 
-        const result = await messager.listen(room)
-        const msg = result ? `已成功启动监听房间(${room})` : `该房间已启动监听(${room})`
+        const result = await messager.listen(realRoom)
+        const msg = result ? `已成功启动监听房间(${realRoom})` : `该房间已启动监听(${realRoom})`
         await send(msg)
     }
 

@@ -66,7 +66,7 @@ class AddUser extends CommandExecutor {
         }
 
         highlight[id].push(uid)
-        await storer.save(json)
+        storer.save(json)
         await send(added)
     }
 }
@@ -138,7 +138,7 @@ class RemoveUser extends CommandExecutor {
             delete highlight[id]
         }
 
-        await storer.save(json)
+        storer.save(json)
         await send(removed)
 
     }

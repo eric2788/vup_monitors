@@ -23,14 +23,14 @@ module.exports = {
         })
     },
 
-    validRoom: async (room) => {
+    toRealRoom: async (room) => {
         if (valid_caches.rooms[room] !== undefined){
             return valid_caches.rooms[room]
         }
         const res = await axios.get(`https://api.live.bilibili.com/room/v1/Room/room_init?id=${room}`)
         if (res.status !== 200) throw new Error(res.statusText)
         const data = res.data
-        return data.code == 0
+        return data?.data?.room_id ?? -1
     },
 
     validUser: async (uid) => {

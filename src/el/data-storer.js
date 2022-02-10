@@ -20,8 +20,8 @@ const DEFAULT_CONFIG = {
         "database": 0
     },
     "websocket": {
-        "host": "localhost:8080",
-        "use-tls": false
+        "host": "blive-jp.ericlamm.xyz",
+        "use-tls": true
     },
     "source": "websocket",
     "owners": [],
@@ -69,13 +69,23 @@ const actions = {
     update: async (update) => {
         const data = await actions.read()
         update(data)
-        await actions.save(data)
+        actions.save(data)
     },
 
-    save: async (data) => {
-       write_transactions.push(JSON.stringify(data))
+    save: (data) => {
+        try {
+            writeFileSync(PATH, JSON.stringify(data))
+            actions.clearCache()
+            console.log(`离线数据储存已更新。`)
+        }catch(err){
+            console.warn(`执行离线储存时发生错误: ${err?.message ?? err}`)
+            console.warn(err)
+        }
     },
 
+    saveQueue: (data) => {
+       write_transactions.push(data)
+    },
     read: async () => {
         if (caches.cached){
             return caches.data
@@ -104,12 +114,5 @@ function isEmpty(o){
 setInterval(() => {
     const data = write_transactions.shift()
     if (!data) return
-    try {
-        writeFileSync(PATH, data)
-        actions.clearCache()
-        console.log(`离线数据储存已更新。`)
-    }catch(err){
-        console.warn(`执行离线储存时发生错误: ${err?.message ?? err}`)
-        console.warn(err)
-    }
+    actions.save(data)
 }, 500)
