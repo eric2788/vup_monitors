@@ -14,18 +14,18 @@ const group_id = 123456 // 测试
 
 function input(str = '') {
     return new Promise((resolve, reject) => {
-        rl.question(str, (input) => resolve(input) );
+        rl.question(str, (input) => resolve(input));
     });
 }
 
-async function testCommands(){
+async function testCommands() {
     // eslint-disable-next-line no-constant-condition
-    while (true){
+    while (true) {
         const msg = await input('Enter command: ')
-        if (msg === '!exit'){
+        if (msg === '!exit') {
             break
         }
-        if (msg[0] !== '!'){
+        if (msg[0] !== '!') {
             console.log('指令必须以 ! 开头')
             continue
         }
@@ -38,29 +38,17 @@ async function testCommands(){
                 data: { group_id },
                 commands
             }, cmd, args)
-        }catch(err){
+        } catch (err) {
             console.error(err)
         }
     }
 }
 
-async function testCommand(){
+async function testCommand() {
     await messager.connect()
     await testCommands()
 }
 
-// 獲取真實房間號
-async function testRequestWithoutCors(){
-    const api = axios.create({
-        baseURL: 'https://blive-jp.ericlamm.xyz/subscribe',
-        timeout: 5000
-    })
 
-    const form = new FormData()
-    form.append('subscribes', 255)
-    const res = await api.put('/add', form, { headers: form.getHeaders() })
-    console.log(res.data[0])
-}
 
-//testCommand().catch(console.error)
-testRequestWithoutCors().catch(console.error)
+!(async () => await testCommand())();

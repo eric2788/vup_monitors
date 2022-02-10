@@ -56,7 +56,7 @@ class AddFocus extends CommandExecutor {
 
         focus_users[data.group_id].push(uid)
 
-        await storer.save(json)
+        storer.save(json)
         await send(`已成功添加用户 ${uid} 到群 ${data.group_id} 的注视用户名单内。`)
 
     }
@@ -114,7 +114,7 @@ class RemoveFocus extends CommandExecutor {
         
         list.splice(index, 1)
 
-        await storer.save(json)
+        storer.save(json)
         await send(`用户 ${uid} 已从群 ${data.group_id} 的注视用户名单中移除。`)
     }
 }
