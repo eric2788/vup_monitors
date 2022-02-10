@@ -53,6 +53,7 @@ class MessageSource {
     // room 必须为真实房间号
     async listen(room, update_storage = true) {
         if (this.subscribing.has(room)) return false
+        await this.listenInternal(room)
         this.subscribing.add(room)
         if (update_storage) {
             await update(data => {

@@ -3,6 +3,7 @@ const messager = require('../src/el/api/message-source');
 const assert = require('assert')
 const { default: axios } = require('axios')
 const FormData = require('form-data')
+const { websocket } = require('../src/el/data-storer').settings
 
 const toListen = [
     22853788,
@@ -13,12 +14,24 @@ const toListen = [
     8725120,
 ]
 
+
+const api = axios.create({
+    baseURL: `http${websocket['use-tls'] ? 's' : ''}://${websocket.host}/subscribe`,
+    timeout: 5000,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'vup_monitors'
+    }
+})
+
 async function testListen() {
     await messager.connect();
     for (const room of toListen) {
         await messager.listen(room);
     }
     assert(toListen.every(room => messager.listening().has(room)), '未成功订阅所有房间');
+    const res = await api.get()
+    assert(toListen.every(room => (res.data ?? []).includes(room)), 'biligo-live-ws 服务器返回的房间列表不包含所有订阅的房间');
 }
 
 async function testUnListen() {
