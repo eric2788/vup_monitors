@@ -39,6 +39,9 @@ async function testUnListen() {
     const room = toListen[0];
     await messager.listen(room);
     assert(await messager.unlisten(room), '未成功取消监听');
+    assert(!messager.listening().has(room), '监听列表仍然有被取消的房间');
+    const res = await api.get()
+    assert(!(res.data ?? []).includes(room), 'biligo-live-ws 服务器返回的房间列表仍然包含被取消的房间');
 }
 
 // 獲取真實房間號
