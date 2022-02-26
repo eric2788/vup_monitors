@@ -130,7 +130,7 @@ B站直播WS讯息监控指令
 
 ### Docker
 
-详见 Dockerfile 或 查看 `docker.io/eric1008818/vup_monitors`
+详见 Dockerfile 或 查看 [`docker.io/eric1008818/vup_monitors`](https://hub.docker.com/r/eric1008818/vup-monitors)
 
 ## 鸣谢
 
