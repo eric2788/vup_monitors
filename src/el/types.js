@@ -33,6 +33,10 @@ class MessageSource {
         throw new Error("not implemented")
     }
 
+    async getRoomUserName(room){
+        return `${room}`;
+    }
+
     async listenAll(rooms){
         if (rooms.length == 0) return
         for (const room of rooms) {

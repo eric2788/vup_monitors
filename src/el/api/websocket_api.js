@@ -81,6 +81,11 @@ class WebSocketSouce extends MessageSource {
         }
     }
 
+    async getRoomUserName(room){
+        const res = await this.api.get(`/listening/${room}`)
+        return res.data
+    }
+
 }
 
 async function initWebSocket(url){

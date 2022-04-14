@@ -12,13 +12,15 @@ class CheckUpdate extends CommandExecutor {
                 await send(`当前已是最新版本。`)
                 return
             }
-            await send(`有可用的新版本: ${v} (${res.prerelease ? '测试版本' : '正式版本'})`)
-            await send(`请自行到 https://github.com/eric2788/vup_monitors/releases 下载`)
+            const msg = [
+                `有可用的新版本: ${v} (${res.prerelease ? '测试版本' : '正式版本'})`,
+                `请自行到 https://github.com/eric2788/vup_monitors/releases 下载`
+            ]
+            await send(msg)
         }catch(err){
             await send(`检查更新时出现错误: ${err}`)
         }
     }
-
 }
 
 module.exports = CheckUpdate

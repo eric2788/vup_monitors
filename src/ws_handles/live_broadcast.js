@@ -1,8 +1,13 @@
 const storer = require('../el/data-storer')
 const settings = storer.settings
 const { sendMessage, sendMessagePrivate, filterAndBroadcast } = require("../el/utils")
+const level = require('../el/leveldb')
 
 module.exports = async ({ws, http}, data) => {
+
+    // 開播時更新
+    await level.updateRoom(data.live_info.room_id)
+    await level.updateUser(data.live_info.uid)
     
     if (!settings.enable_live_broadcast) return // 沒啟用廣播
     // 不带live_time的是推流出现的标志，忽略

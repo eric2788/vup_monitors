@@ -1,16 +1,11 @@
 const { default: axios } = require("axios")
-
-
-const valid_caches = {
-    rooms: {},
-    users: {}
-}
+const level = require('./leveldb')
 
 module.exports = {
     sleep: async (ms) => new Promise((res,) => setTimeout(res, ms)),
 
     sendMessage: async (ctx, group_id, message) => {
-        await ctx.send('send_group_msg', { 
+        await ctx.send('send_group_msg', {
             group_id,
             message: message instanceof Array ? message.join('\n') : message
         })
@@ -24,33 +19,42 @@ module.exports = {
     },
 
     toRealRoom: async (room) => {
-        if (valid_caches.rooms[room] !== undefined){
-            return valid_caches.rooms[room]
+        let res = await level.getRoom(room)
+        if (res !== undefined) {
+            return res?.room_id
         }
-        const res = await axios.get(`https://api.live.bilibili.com/room/v1/Room/room_init?id=${room}`)
+        res = await axios.get(`https://api.live.bilibili.com/room/v1/Room/room_init?id=${room}`)
         if (res.status !== 200) throw new Error(res.statusText)
-        const data = res.data
-        return data?.data?.room_id ?? -1
+        const data = res.data?.data
+        if (res.data.code == 0) {
+            // put both real id room and short id room
+            await level.putRoom(room, data)
+            await level.putRoom(res?.data?.room_id, data)
+        }
+        return data?.room_id ?? -1
     },
 
     validUser: async (uid) => {
-        if (valid_caches.users[uid] !== undefined) {
-            return valid_caches.users[uid]
+        let res = await level.getUser(uid)
+        if (res !== undefined) {
+            return res?.name
         }
-        const res = await axios.get(`https://api.bilibili.com/x/space/acc/info?mid=${uid}&jsonp=jsonp`)
+        res = await axios.get(`https://api.bilibili.com/x/space/acc/info?mid=${uid}&jsonp=jsonp`)
         if (res.status !== 200) throw new Error(res.statusText)
-        const data = res.data
-        return data.code == 0
+        const data = res.data?.data
+        if (res.data.code == 0){
+            await level.putUser(uid, data)
+        }
+        return data?.name
     },
-
     filterAndBroadcast: (highlight, uid, send, ctx, messages) => {
         if (!highlight) {
             console.warn('高亮列表为空，将返回 []')
             return []
         }
         return Object.entries(highlight)
-                    .filter(([id, users]) => users.includes(uid))
-                    .map(([id, users]) => id)
-                    .map(id => send(ctx, id, messages))
+            .filter(([id, users]) => users.includes(uid))
+            .map(([id, users]) => id)
+            .map(id => send(ctx, id, messages))
     }
 }

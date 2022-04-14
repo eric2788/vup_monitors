@@ -20,13 +20,15 @@ const DEFAULT_CONFIG = {
         "database": 0
     },
     "websocket": {
-        "host": "blive-jp.ericlamm.xyz",
+        "host": "blive.ericlamm.xyz",
         "use-tls": true
     },
     "source": "websocket",
     "owners": [],
     "enable_live_broadcast": false,
     "show_cover": true,
+    "show_gift_danmu": false,
+    "auto_check_update": true,
 }
 
 
@@ -59,7 +61,7 @@ if (!existsSync(SETTING_PATH)) {
 
 }
 
-const settings = JSON.parse(readFileSync(SETTING_PATH))
+const settings = { ...DEFAULT_CONFIG, ...JSON.parse(readFileSync(SETTING_PATH, 'utf8')) }
 
 const write_transactions = []
 

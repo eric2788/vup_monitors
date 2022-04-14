@@ -1,3 +1,6 @@
+const initLogger = require('./el/logger')
+initLogger()
+
 const { ws, http } = require('./bot')
 const onCommand = require('./command_listener')
 const messager = require('./el/api/message-source')
@@ -12,7 +15,7 @@ async function executeCommands(data) {
   }
 }
 
-const { owners } = require('./el/data-storer').settings
+const { owners, auto_check_update } = require('./el/data-storer').settings
 console.log(`已设置管理员QQ号: ${owners}, 群管和管理员都可使用指令。`)
 
 // 同时启动 Redis 和 WS 监控
@@ -25,5 +28,10 @@ Promise.all([ws.startWS(), messager.connect(), updater.checkUpdate()])
       }
       executeCommands(data)
     })
+
+    if (auto_check_update){
+      updater.autoCheckUpdate()
+    }
+
   })
   .catch(console.error)

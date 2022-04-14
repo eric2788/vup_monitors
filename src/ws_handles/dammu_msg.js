@@ -5,14 +5,18 @@ module.exports = async ({ ws, http }, data) => {
     const liveName = data.live_info.name
     const info = data.content.info
 
-    // 過濾抽獎和紅包彈幕
-    if (info[0][9] !== 0) {
+    const [uid, uname] = info[2]
+
+    // 過濾抽獎和紅包彈幕             设定选择不显示抽奖弹幕             发送抽奖弹幕的是主播
+    if (info[0][9] !== 0 && (!storer.settings.show_gift_danmu || data.live_info.uid == uid)) {
         return
     }
 
     const danmaku = info[1]
+
     if (danmaku.includes('【')) return //严格：包含左角括号的一律认为是同传弹幕以应对联动场景
-    const [uid, uname] = info[2]
+
+    
 
     const blive = (await storer.read())?.blive
     const { highlight, highlight_private, focus_users } = blive ?? { highlight: {}, highlight_private: {}, focus_users: {} }
@@ -34,9 +38,16 @@ module.exports = async ({ ws, http }, data) => {
 
     group_ids.forEach((group_id) => group_highlight[group_id] = highlight[group_id])
 
+    let imageUrl = undefined
+
+    // 表情包弹幕
+    if (info[0][13] !== "{}") {
+        imageUrl = info[0][13]['url']
+    }
+
     const messages = [
         `${uname} 在 ${liveName} 的直播间发送了一则讯息`,
-        `弹幕: ${danmaku}`
+        imageUrl ? `表情包:\n[CQ:image,file=${imageUrl}]` : `弹幕: ${danmaku}`,
     ]
 
     // 广播到群
