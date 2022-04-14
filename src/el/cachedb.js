@@ -1,38 +1,40 @@
-const { Level } = require('level')
+const { kvsEnvStorage } = require('@kvs/env')
+
 const { default: axios } = require("axios")
-const db = new Level('./caches', { valueEncoding: 'json' })
+
+
+let db
+
+async function initDB(){
+    db = await kvsEnvStorage({
+        name: 'caches',
+        version: 1,
+        storeFilePath: './caches'
+    })
+    console.log(`cachedb 初始化成功`)
+}
+
+function getDB(){
+    return db
+}
 
 // read
 async function getUser(uid) {
-    try {
-        return await db.get(`user:${uid}`)
-    } catch (err) {
-        if (err.code === 'LEVEL_NOT_FOUND') {
-            return undefined
-        }
-        throw err
-    }
+    return await db.get(`user:${uid}`)
 }
 
 async function getRoom(room_id) {
-    try {
-        return await db.get(`room:${room_id}`)
-    } catch (err) {
-        if (err.code === 'LEVEL_NOT_FOUND') {
-            return undefined
-        }
-        throw err
-    }
+    return await db.get(`room:${room_id}`)
 }
 
 // write
 
 async function putUser(uid, user) {
-    await db.put(`user:${uid}`, user)
+    await db.set(`user:${uid}`, user)
 }
 
 async function putRoom(room_id, room) {
-    await db.put(`room:${room_id}`, room)
+    await db.set(`room:${room_id}`, room)
 }
 
 
@@ -70,11 +72,12 @@ async function updateUser(uid) {
 }
 
 module.exports = {
+    initDB,
     getUser,
     getRoom,
     putUser,
     putRoom,
-    db,
+    getDB,
     updateUser,
     updateRoom
 }

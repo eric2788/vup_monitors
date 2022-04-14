@@ -1,7 +1,7 @@
 const storer = require('../el/data-storer')
 const settings = storer.settings
 const { sendMessage, sendMessagePrivate, filterAndBroadcast } = require("../el/utils")
-const level = require('../el/leveldb')
+const level = require('../el/cachedb')
 
 module.exports = async ({ws, http}, data) => {
 

@@ -28,7 +28,7 @@ const DEFAULT_CONFIG = {
     "enable_live_broadcast": false,
     "show_cover": true,
     "show_gift_danmu": false,
-    "auto_check_update": true,
+    "auto_check_update": true
 }
 
 
