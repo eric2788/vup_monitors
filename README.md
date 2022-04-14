@@ -120,11 +120,43 @@ B站直播WS讯息监控指令
 
 检查是否有新版本 (每次启动也会检查一次)
 
-## 启用开播通知
+## 设定
 
-到 `settings.json` 设置 `enable_live_broadcast: true` 即可。
+设定可到 `data/settings.json` 中查看，参考如下:
 
-注意，有注视用户的群组将会限制仅限该注视用户开播才会广播通知，而其他没有注视用户的群组/私聊则以高亮用户开播为准。
+```json
+{
+    // go-cqhttp 相关
+    "bot": {
+        "http": "http://127.0.0.1:5700",
+        "ws": "ws://127.0.0.1:6700"
+    },
+    // redis 作为数据源，如果你是用 websocket, 可无视
+    "redis": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "database": 0
+    },
+    // websocket 数据源
+    // 使用 blive.ericlamm.xyz 可贡献统计数据
+    "websocket": {
+        "host": "blive.ericlamm.xyz",
+        "use-tls": true
+    },
+    "source": "websocket", // 数据源选择 websocket, redis
+    "owners": [], // 管理员 QQ 号，列表内的 qq 号可绕过房管限制
+    "enable_live_broadcast": false, // 启用开播通知
+    "show_cover": true, // 开播通知时是否显示封面
+    "show_gift_danmu": false, // 是否显示礼物弹幕
+    "auto_check_update": true, // 是否自动每天检查更新
+}
+```
+
+## 统计数据
+
+使用了 ``https://blive.ericlamm.xyz`` 作为 公共API地址 的机器人都可以贡献统计数据。
+
+统计数据网站: [ddstats.ericlamm.xyz](https://ddstats.ericlamm.xyz)
 
 ## 其他部署方式
 

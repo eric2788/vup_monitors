@@ -6,6 +6,7 @@ go-cqhttp/*
 
 /dist/
 /data/
+/logs/
 
 .DS_Store
 yarn.lock

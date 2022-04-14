@@ -3,8 +3,38 @@
 
 ### 更新
 
-- 下播提示
-- 去除多余开播提示(开播提示一种是点直播开始，一种是收到推流，第二种可能反复出现因此过滤掉了)，增加配置项选择是否显示封面(默认为false)
-- 过滤同传弹幕(include左角括号)
-- 本人进入房间时提示为“进入自己的直播间”
+- 可设定是否过滤抽奖和红包弹幕
+- 新增表情包发送
+- 更详细的 logging, 並设有档案记录 /logs/
+- 新增每天自动检查 (只在黑窗回报)
+
+### settings.json 模版参考
+
+若果旧版本没有，请自行手动添加新设定属性
+
+```json
+{
+    "bot": {
+        "http": "http://127.0.0.1:5700",
+        "ws": "ws://127.0.0.1:6700"
+    },
+    "redis": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "database": 0
+    },
+    "websocket": {
+        "host": "blive.ericlamm.xyz",
+        "use-tls": true
+    },
+    "source": "websocket",
+    "owners": [],
+    "enable_live_broadcast": false,
+    "show_cover": true,
+    "show_gift_danmu": false,
+    "auto_check_update": true,
+}
+```
+
+
 
