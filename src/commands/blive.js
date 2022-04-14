@@ -1,6 +1,7 @@
 const { CommandExecutor } = require("../el/types");
 const messager = require('../el/api/message-source')
 const { toRealRoom: validRoom } = require('../el/utils')
+
 class BLiveListen extends CommandExecutor {
 
 
@@ -51,7 +52,20 @@ class BLiveListening extends CommandExecutor {
 
     async execute({ send, data }, args) {
         const set = messager.listening()
-        await send(`正在监听的房间: ${[...set]}`)
+
+        const displays = []
+
+        for (const room of set) {
+            try {
+                const res = await messager.getRoomUserName(room)
+                displays.push(`${room}(${res?.name})`)
+            }catch(err){
+                console.error(`獲取房間資訊錯誤: ${err}`)
+                displays.push(`${room}`)
+            }
+        }
+
+        await send(`正在监听的房间: ${displays}`)
     }
 }
 
