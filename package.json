@@ -11,10 +11,11 @@
     "test": "mocha --exit --timeout 60000"
   },
   "dependencies": {
+    "@kvs/env": "^2.1.1",
     "axios": "^0.21.4",
     "form-data": "^4.0.0",
-    "level": "^8.0.0",
     "redis": "^4.0.0-rc.4",
+    "semver": "^7.3.7",
     "winston": "^3.7.2",
     "ws": "^7.5.6"
   },

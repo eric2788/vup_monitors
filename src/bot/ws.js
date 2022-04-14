@@ -38,6 +38,7 @@ async function startWS(){
       try {
         callback(JSON.parse(data))
       } catch (e) {
+        console.error('解析WS时报错')
         console.error(e)
       }
     })

@@ -1,7 +1,7 @@
 const { CommandExecutor } = require('../el/types');
 const storer = require('../el/data-storer')
 const { validUser } = require('../el/utils')
-const level = require('../el/leveldb')
+const level = require('../el/cachedb')
 
 const KEY_GROUP = 'highlight'
 const KEY_PRIVATE = 'highlight_private'

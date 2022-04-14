@@ -1,32 +1,20 @@
 const winston = require('winston');
-const { combine, timestamp, simple, colorize } = winston.format;
+const { combine, timestamp, simple, colorize, json } = winston.format;
 
 const logger = winston.createLogger({
     level: 'info',
-    format: combine(
-        colorize({
-            colors: {
-                info: 'blue',
-                debug: 'green',
-                warn: 'yellow',
-            }
-        }),
-        timestamp(),
-        simple(),
-    ),
+    format: timestamp(),
     transports: [
-        new winston.transports.Console(),
-        new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
-        new winston.transports.File({ filename: 'logs/server.log' }),
+        new winston.transports.Console({
+            format: combine(
+                colorize(),
+                simple(),
+            )
+        }),
+        new winston.transports.File({ format: json(), filename: 'logs/error.log', level: 'error', encoding: 'utf-8' }),
+        new winston.transports.File({ format: json(), filename: 'logs/server.log', encoding: 'utf-8' }),
     ],
 });
-
-
-if (process.env.NODE_ENV !== 'production') {
-    logger.add(new winston.transports.Console({
-        format: winston.format.simple(),
-    }));
-}
 
 
 module.exports = function () {

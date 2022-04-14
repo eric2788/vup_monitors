@@ -1,4 +1,5 @@
 const { default: axios } = require('axios')
+const semver = require('semver');
 
 const VERSION = '0.1.10'
 
@@ -15,7 +16,10 @@ async function checkUpdate(){
         const res = await getLatestVersion()
         if (res.prerelease) return
         const v = res.tag_name
-        if (v <= VERSION) return
+        if (!semver.gt(v, VERSION)){
+            console.log(`当前已是最新版本。`)
+            return
+        }
         console.warn(`有可用的更新版本: ${v}`)
         console.warn(`请自行到 https://github.com/eric2788/vup_monitors/releases 下载`)
     }catch(err){
@@ -30,7 +34,7 @@ async function getLatestVersion(){
 
 let checkUpdateInterval = -1;
 
-async function autoCheckUpdate(){
+function autoCheckUpdate(){
     if (checkUpdateInterval !== -1) return
     checkUpdateInterval = setInterval(checkUpdate, 1000 * 60 * 60 * 24)
 }
@@ -38,5 +42,6 @@ async function autoCheckUpdate(){
 module.exports = {
     checkUpdate,
     getLatestVersion,
+    autoCheckUpdate,
     VERSION
 }

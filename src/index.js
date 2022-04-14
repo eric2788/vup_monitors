@@ -2,6 +2,8 @@ const initLogger = require('./el/logger')
 initLogger()
 
 const { ws, http } = require('./bot')
+const db = require('./el/cachedb')
+
 const onCommand = require('./command_listener')
 const messager = require('./el/api/message-source')
 const updater = require('./el/updater')
@@ -20,7 +22,7 @@ console.log(`已设置管理员QQ号: ${owners}, 群管和管理员都可使用�
 
 // 同时启动 Redis 和 WS 监控
 console.log('正在启动 vup monitors...')
-Promise.all([ws.startWS(), messager.connect(), updater.checkUpdate()])
+Promise.all([ws.startWS(), messager.connect(), db.initDB(), updater.checkUpdate()])
   .then(() => {
     ws.setListener(data => {
       if (process.env.NODE_ENV === 'development') {
@@ -34,4 +36,7 @@ Promise.all([ws.startWS(), messager.connect(), updater.checkUpdate()])
     }
 
   })
-  .catch(console.error)
+  .catch(err => {
+    console.error('启动程序时错误:')
+    console.error(err.stack)
+  })
