@@ -15,7 +15,7 @@ class WebSocketSouce extends MessageSource {
     constructor(){
         super()
         this.websocketURL = `ws${websocket['use-tls'] ? 's' : ''}://${websocket.host}/ws?id=${IDENTIFIER}`
-        const baseURL = `http${websocket['use-tls'] ? 's' : ''}://${websocket.host}/subscribe`
+        const baseURL = `http${websocket['use-tls'] ? 's' : ''}://${websocket.host}`
         this.api = axios.create({
             baseURL,
             timeout: 5000,
@@ -50,7 +50,7 @@ class WebSocketSouce extends MessageSource {
         const form = new FormData()
         form.append('subscribes', room)
         try {
-            await this.api.put('/add', form, { headers: form.getHeaders() })
+            await this.api.put('/subscribe/add', form, { headers: form.getHeaders() })
         }catch(err){
             throw new Error(err?.response?.data?.error ?? err?.response?.data ?? err)
         }
@@ -61,7 +61,7 @@ class WebSocketSouce extends MessageSource {
         const form = new FormData()
         form.append('subscribes', room)
         try {
-            await this.api.put('/remove', form, { headers: form.getHeaders() })
+            await this.api.put('/subscribe/remove', form, { headers: form.getHeaders() })
         }catch(err){
             throw new Error(err?.response?.data?.error ?? err?.response?.data ?? err)
         }
@@ -75,7 +75,7 @@ class WebSocketSouce extends MessageSource {
         }
         try {
             // 透過調用 ?validate=false 來略過房間訊息檢查以防止412請求頻繁
-            await this.api.post('?validate=false', form, { headers: form.getHeaders() })
+            await this.api.post('/subscribe?validate=false', form, { headers: form.getHeaders() })
         }catch(err){
             throw new Error(err?.response?.data?.error ?? err?.response?.data ?? err)
         }
