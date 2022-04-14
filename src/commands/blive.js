@@ -48,6 +48,9 @@ class BLiveTerminate extends CommandExecutor {
     }
 }
 
+
+const roomMap = new Map()
+
 class BLiveListening extends CommandExecutor {
 
     async execute({ send, data }, args) {
@@ -55,9 +58,17 @@ class BLiveListening extends CommandExecutor {
 
         const displays = []
 
+        await send(`正在刷取监听房间资讯，可能需要几分钟...`)
+
         for (const room of set) {
             try {
-                const res = await messager.getRoomUserName(room)
+                let res;
+                if (roomMap.has(room)) {
+                    res = roomMap.get(room)
+                }else{
+                    res = await messager.getRoomUserName(room)
+                    roomMap.set(room, res)
+                }
                 displays.push(`${room}(${res?.name})`)
             }catch(err){
                 console.error(`獲取房間資訊錯誤: ${err}`)
