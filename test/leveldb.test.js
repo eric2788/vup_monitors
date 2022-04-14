@@ -52,4 +52,9 @@ describe('leveldb 資料庫讀寫測試', () => {
         console.log(res2)
         assert(res === res2.name, '離線讀取用戶失敗')
     })
+
+    it('更新資料', async () => {
+        await leveldb.updateRoom(545)
+        await leveldb.updateUser(15641218)
+    })
 })
