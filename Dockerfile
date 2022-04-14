@@ -7,6 +7,6 @@ COPY *.json .
 
 RUN npm install
 
-VOLUME [ "/app/data" ]
+VOLUME [ "/app/data"，"/app/caches" ]
 
 CMD [ "npm", "run", "start" ]

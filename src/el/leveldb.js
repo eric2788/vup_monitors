@@ -1,6 +1,6 @@
 const { Level } = require('level')
 const { default: axios } = require("axios")
-const db = new Level('/caches', { valueEncoding: 'json' })
+const db = new Level('./caches', { valueEncoding: 'json' })
 
 // read
 async function getUser(uid) {
