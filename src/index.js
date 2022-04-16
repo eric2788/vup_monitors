@@ -13,7 +13,7 @@ async function executeCommands(data) {
     await onCommand({ data, ws, http })
   } catch (err) {
     console.warn(`执行指令时出现错误: ${err?.message}`)
-    console.error(err)
+    console.debug(err.stack)
   }
 }
 
@@ -37,6 +37,6 @@ Promise.all([ws.startWS(), messager.connect(), db.initDB(), updater.checkUpdate(
 
   })
   .catch(err => {
-    console.error('启动程序时错误:')
+    console.error('启动程序时错误: ')
     console.error(err.stack)
   })

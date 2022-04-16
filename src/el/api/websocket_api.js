@@ -9,7 +9,7 @@ const { handleMessage } = require('../message-handler');
 
 const IDENTIFIER = 'vup_monitors'
 
-class WebSocketSouce extends MessageSource {
+class WebSocketSource extends MessageSource {
 
 
     constructor(){
@@ -98,5 +98,5 @@ async function initWebSocket(url){
 
 
 module.exports = {
-    'websocket': WebSocketSouce
+    'websocket': WebSocketSource
 }

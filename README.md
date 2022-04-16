@@ -149,6 +149,8 @@ B站直播WS讯息监控指令
     "show_cover": true, // 开播通知时是否显示封面
     "show_gift_danmu": false, // 是否显示礼物弹幕
     "auto_check_update": true, // 是否自动每天检查更新
+    "show_detail_list": true, // 显示高亮/直播/注视列表时是否顺带显示用户名称(需要更多时间刷取)
+    "debug_mode": false // 是否啟用 debug 模式
 }
 ```
 

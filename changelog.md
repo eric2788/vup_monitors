@@ -3,11 +3,11 @@
 
 ### 更新
 
-- 可设定是否过滤抽奖和红包弹幕
-- 新增表情包发送
-- 更详细的 logging, 並设有档案记录 /logs/
-- 新增每天自动检查 (只在黑窗回报)
-- 新增顯示列表時順帶顯示用戶名稱(列表內的需要重新添加才能生效) (開播時刷新)
+- 修復高亮列表顯示 Object object 而不是用戶名稱
+- 新增設定是否顯示詳細列表
+- 新增注视用户详细列表名单
+- 新增大航海用户捕捉
+- 新增 debug 模式設定
 
 ### settings.json 模版参考
 
@@ -34,6 +34,8 @@
     "show_cover": true,
     "show_gift_danmu": false,
     "auto_check_update": true,
+    "show_detail_list": true,
+    "debug_mode": false
 }
 ```
 

@@ -1,6 +1,7 @@
 const { CommandExecutor } = require("../el/types");
 const messager = require('../el/api/message-source')
 const { toRealRoom: validRoom } = require('../el/utils')
+const settings = require('../el/data-storer').settings
 
 class BLiveListen extends CommandExecutor {
 
@@ -58,20 +59,26 @@ class BLiveListening extends CommandExecutor {
 
         const displays = []
 
-        await send(`正在刷取监听房间资讯，可能需要几分钟...`)
+        if (settings.show_detail_list){
+            await send(`正在刷取监听房间资讯，可能需要几分钟...`)
+        }
 
         for (const room of set) {
-            try {
-                let res;
-                if (roomMap.has(room)) {
-                    res = roomMap.get(room)
-                }else{
-                    res = await messager.getRoomUserName(room)
-                    roomMap.set(room, res)
+            if (settings.show_detail_list){
+                try {
+                    let res;
+                    if (roomMap.has(room)) {
+                        res = roomMap.get(room)
+                    }else{
+                        res = await messager.getRoomUserName(room)
+                        roomMap.set(room, res)
+                    }
+                    displays.push(`${room}(${res?.name})`)
+                }catch(err){
+                    console.warn(`獲取房間資訊錯誤: ${err}`)
+                    displays.push(`${room}`)
                 }
-                displays.push(`${room}(${res?.name})`)
-            }catch(err){
-                console.error(`獲取房間資訊錯誤: ${err}`)
+            }else{
                 displays.push(`${room}`)
             }
         }

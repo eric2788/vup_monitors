@@ -19,7 +19,7 @@ function handleMessage(string){
         }
         handle({ws, http}, message).catch(err => {
             console.warn(`执行指令 ${message.command} 时出现错误: ${err?.message}`)
-            console.error(err)
+            console.debug(err.stack)
         })
     }catch(err) {
         console.warn(`接收 redis 数据时出现错误: ${err?.message ?? err}`)
