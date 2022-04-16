@@ -169,7 +169,7 @@ class Focusing extends CommandExecutor {
             }
         }
 
-        await send(`群 ${data.group_id} 的注视用户列表: ${focusing}`)
+        await send(`群 ${data.group_id} 的注视用户列表: ${displays}`)
     }
 }
 
