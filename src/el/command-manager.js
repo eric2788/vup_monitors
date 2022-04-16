@@ -23,7 +23,7 @@ const invoke = async ({ send, data, commands }, command, args) => {
                 await executor.execute({ send, data }, args)
             }catch(err){
                 console.error(`执行指令 ${cmd} 时出现错误: ${err?.message}`)
-                console.error(err)
+                console.debug(err.stack)
                 await send(`执行时发生错误: ${err?.message ?? err}`)
             }
             return

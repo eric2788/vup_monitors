@@ -7,6 +7,7 @@
 - 新增設定是否顯示詳細列表
 - 新增注视用户详细列表名单
 - 新增大航海用户捕捉
+- 新增 debug 模式設定
 
 ### settings.json 模版参考
 
@@ -33,7 +34,8 @@
     "show_cover": true,
     "show_gift_danmu": false,
     "auto_check_update": true,
-    "show_detail_list": true
+    "show_detail_list": true,
+    "debug_mode": false
 }
 ```
 

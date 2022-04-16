@@ -29,7 +29,8 @@ const DEFAULT_CONFIG = {
     "show_cover": true,
     "show_gift_danmu": false,
     "auto_check_update": true,
-    "show_detail_list": true
+    "show_detail_list": true,
+    "debug_mode": false
 }
 
 

@@ -161,7 +161,7 @@ class Focusing extends CommandExecutor {
                         displays.push(`${uid}`)
                     }
                 } catch (err) {
-                    console.error(`獲取用戶資訊錯誤: ${err}`)
+                    console.warn(`獲取用戶資訊錯誤: ${err}`)
                     displays.push(`${uid}`)
                 }
             }else{

@@ -33,8 +33,7 @@ module.exports = async({data, ws, http}) => {
         console.debug(`正在处理 ${is_group ? '群' : '私聊'} 指令: ${cmd}, 参数: ${args}`)
         await invoke(actions, cmd, args)
     }catch(err){
-        console.warn('执行指令时出现错误')
-        console.error(err)
+        console.warn('执行指令时出现错误: '+err)
     }
 }
 

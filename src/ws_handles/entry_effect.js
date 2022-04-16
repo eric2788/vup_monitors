@@ -27,8 +27,8 @@ module.exports = async ({ws, http}, data) => {
     group_ids.forEach((group_id) => group_highlight[group_id] = highlight[group_id])
 
 
-    const anyPrivate = Object.entries(highlight_private).any(([id, users]) => users.includes(uid))
-    const anyGroup = Object.entries(group_highlight).any(([id, users]) => users.includes(uid))
+    const anyPrivate = Object.entries(highlight_private).some(([id, users]) => users.includes(uid))
+    const anyGroup = Object.entries(group_highlight).some(([id, users]) => users.includes(uid))
     
     // 没有群和人关注这个uid时则返回防止请求api频繁
     if (!anyPrivate && !anyGroup){

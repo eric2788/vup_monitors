@@ -75,7 +75,7 @@ class BLiveListening extends CommandExecutor {
                     }
                     displays.push(`${room}(${res?.name})`)
                 }catch(err){
-                    console.error(`獲取房間資訊錯誤: ${err}`)
+                    console.warn(`獲取房間資訊錯誤: ${err}`)
                     displays.push(`${room}`)
                 }
             }else{
