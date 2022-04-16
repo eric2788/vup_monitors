@@ -37,6 +37,12 @@ class AddFocus extends CommandExecutor {
             data.group_id = group_id
         }
 
+        const username = await validUser(uid)
+        if (!username) {
+            await send(`找不到用户 ${uid}`)
+            return
+        }
+
         const json = await storer.read()
         const blive = json.blive
 
@@ -51,14 +57,14 @@ class AddFocus extends CommandExecutor {
         }
 
         if (focus_users[data.group_id].includes(uid)) {
-            await send(`用户 ${uid} 已经在群 ${data.group_id} 的注视用户名单内。`)
+            await send(`用户 ${username}(${uid}) 已经在群 ${data.group_id} 的注视用户名单内。`)
             return
         }
 
         focus_users[data.group_id].push(uid)
 
         storer.save(json)
-        await send(`已成功添加用户 ${uid} 到群 ${data.group_id} 的注视用户名单内。`)
+        await send(`已成功添加用户 ${username}(${uid}) 到群 ${data.group_id} 的注视用户名单内。`)
 
     }
 }
