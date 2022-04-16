@@ -35,6 +35,10 @@ async function testRemoveHighlight(){
     assert(!(data.blive.highlight[group_id] ?? []).includes(user), '未成功移除高亮');
 }
 
+async function testShowHighlight(){
+    await (new highlights['列表']()).execute(cmdExecute)
+}
+
 
 const focus_users = [
     1576121,
@@ -57,9 +61,15 @@ async function testRemoveFocus(){
     assert(!(data.blive.focus_users[group_id] ?? []).includes(user), '未成功移除注视用户');
 }
 
+async function testShowFocus(){
+    await (new focus['列表']()).execute(cmdExecute)
+}
+
 describe('高亮用户修改测试', () => {
     it('新增高亮用户', testAddHighlight)
     it('移除高亮用户', testRemoveHighlight)
+    it('显示高亮用户列表', testShowHighlight)
     it('新增注视用户', testAddFocus)
     it('移除注视用户', testRemoveFocus)
+    it('显示注视用户列表', testShowFocus)
 })

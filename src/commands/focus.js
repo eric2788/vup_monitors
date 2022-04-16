@@ -1,6 +1,7 @@
 const { CommandExecutor } = require('../el/types');
 const storer = require('../el/data-storer')
 const { validUser } = require('../el/utils');
+const level = require('../el/cachedb')
 
 class AddFocus extends CommandExecutor {
 
@@ -136,6 +137,32 @@ class Focusing extends CommandExecutor {
         }
 
         const focusing = focus_users[data.group_id] ?? []
+
+        const displays = []
+
+        if (storer.settings.show_detail_list){
+            await send(`正在刷取群 ${data.group_id} 的注视用户资讯，可能需要几分钟...`)
+        }
+
+        for (const uid of focusing){
+            if (storer.settings.show_detail_list){
+                try {
+                    const user = await level.getUser(uid)
+                    if (user) {
+                        displays.push(`${user.name}(${uid})`)
+                    } else {
+                        console.warn(`缓存找不到用户 ${uid}, 你可能需要重新手动添加才能生效`)
+                        displays.push(`${uid}`)
+                    }
+                } catch (err) {
+                    console.error(`獲取用戶資訊錯誤: ${err}`)
+                    displays.push(`${uid}`)
+                }
+            }else{
+                displays.push(`${uid}`)
+            }
+        }
+
         await send(`群 ${data.group_id} 的注视用户列表: ${focusing}`)
     }
 }
