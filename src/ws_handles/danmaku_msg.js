@@ -47,7 +47,7 @@ module.exports = async ({ ws, http }, data) => {
 
     const messages = [
         `${uname} 在` + (uname == liveName ? `自己` : ` ${liveName} `) + `的直播间发送：`,
-        imageUrl ? `表情包:\n[CQ:image,file=${imageUrl}]` : `弹幕: ${danmaku}`,
+        storer.settings.show_image_danmu && imageUrl ? `[CQ:image,file=${imageUrl}]` : imageUrl ? `表情包：${danmaku}` : `${danmaku}`,
     ]
 
     // 广播到群
