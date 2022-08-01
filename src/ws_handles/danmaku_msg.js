@@ -46,7 +46,7 @@ module.exports = async ({ ws, http }, data) => {
     }
 
     const messages = [
-        `${uname} 在 ${liveName} 的直播间发送了一则讯息`,
+        `${uname} 在` + (uname == liveName ? `自己` : ` ${liveName} `) + `的直播间发送：`,
         imageUrl ? `表情包:\n[CQ:image,file=${imageUrl}]` : `弹幕: ${danmaku}`,
     ]
 
