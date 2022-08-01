@@ -7,12 +7,12 @@ const focus = require('./commands/focus')
 const checkUpdate = require('./commands/check_update')
 
 // ws handles
-const danmu_msg = require('./ws_handles/dammu_msg')
+const danmaku_msg = require('./ws_handles/danmaku_msg')
 const room_enter = require('./ws_handles/room_enter')
 const superchat_msg = require('./ws_handles/superchat_msg')
+const entry_effect = require('./ws_handles/entry_effect')
 const live_broadcast = require('./ws_handles/live_broadcast')
 const live_end = require('./ws_handles/live_end')
-const entry_effect = require('./ws_handles/entry_effect')
 
 class Help extends CommandExecutor {
 
@@ -36,11 +36,11 @@ module.exports = {
     '检查更新': checkUpdate 
   },
   ws_handles: {
-    'DANMU_MSG': danmu_msg,
-    'LIVE': live_broadcast,
-    'PREPARING': live_end,
+    'DANMAKU_MSG': danmaku_msg,
     'SUPER_CHAT_MESSAGE': superchat_msg,
     'INTERACT_WORD': room_enter,
-    'ENTRY_EFFECT': entry_effect
+    'ENTRY_EFFECT': entry_effect,
+    'LIVE': live_broadcast,
+    'PREPARING': live_end
   }
 }
