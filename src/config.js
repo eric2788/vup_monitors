@@ -7,7 +7,7 @@ const focus = require('./commands/focus')
 const checkUpdate = require('./commands/check_update')
 
 // ws handles
-const danmaku_msg = require('./ws_handles/danmaku_msg')
+const danmu_msg = require('./ws_handles/danmu_msg')
 const room_enter = require('./ws_handles/room_enter')
 const superchat_msg = require('./ws_handles/superchat_msg')
 const entry_effect = require('./ws_handles/entry_effect')
@@ -36,7 +36,7 @@ module.exports = {
     '检查更新': checkUpdate 
   },
   ws_handles: {
-    'DANMAKU_MSG': danmaku_msg,
+    'DANMU_MSG': danmu_msg,
     'SUPER_CHAT_MESSAGE': superchat_msg,
     'INTERACT_WORD': room_enter,
     'ENTRY_EFFECT': entry_effect,
