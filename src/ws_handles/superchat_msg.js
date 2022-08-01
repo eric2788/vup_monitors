@@ -31,8 +31,7 @@ module.exports = async ({ ws, http }, data) => {
     group_ids.forEach((group_id) => group_highlight[group_id] = highlight[group_id])
 
     const messages = [
-        `在 ${liveName} 的直播间收到来自 ${uname} 的醒目留言`,
-        `￥ ${price}`,
+        `${uname} 在 ${liveName} 的直播间打了￥${price}的SC：`,
         `「${message}」`
     ]
 
