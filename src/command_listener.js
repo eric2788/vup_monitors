@@ -1,5 +1,5 @@
 const { invoke } = require('./el/command-manager')
-const { owners } = require('./el/data-storer').settings
+const settings = require('./el/data-storer').settings
 const { commands } = require('./config')
 
 module.exports = async({data, ws, http}) => {
@@ -9,9 +9,9 @@ module.exports = async({data, ws, http}) => {
     const is_group = data.message_type === 'group'
 
     const isAdmin = is_group ? data.sender.role === 'admin' : false
-    const insideOwners = owners && owners.includes(data.sender.user_id)
+    const insideOwners = settings.owners && settings.owners.includes(data.sender.user_id)
 
-    if (!isAdmin && !insideOwners){
+    if (!(isAdmin & settings.accept_gadmin_command) && !insideOwners){
         // maybe say something for no permission
         console.log(`用户 ${data.sender.nickname} 没有权限去执行指令，已略过`)
         return // no permission
