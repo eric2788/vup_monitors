@@ -208,6 +208,9 @@ class HighLighting extends CommandExecutor {
 
 module.exports = {
     '新增': AddUser,
+    'add': AddUser,
     '移除': RemoveUser,
-    '列表': HighLighting
+    'del': RemoveUser,
+    '列表': HighLighting,
+    'list': HighLighting
 }

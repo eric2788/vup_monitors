@@ -90,6 +90,9 @@ class BLiveListening extends CommandExecutor {
 
 module.exports = {
     '监控': BLiveListen,
+    'add': BLiveListen,
     '中止': BLiveTerminate,
-    '监听中': BLiveListening
+    'del': BLiveTerminate,
+    '监听中': BLiveListening,
+    'list': BLiveListening
 }

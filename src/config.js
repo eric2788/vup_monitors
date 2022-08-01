@@ -27,8 +27,11 @@ class Help extends CommandExecutor {
 module.exports = {
   commands: {
     'B站直播': blive,
+    'room': blive,
     '高亮': highlights,
+    'user': highlights,
     '注视': focus,
+    'focus': focus,
     'help': Help,
     '检查更新': checkUpdate 
   },

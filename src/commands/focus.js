@@ -175,6 +175,9 @@ class Focusing extends CommandExecutor {
 
 module.exports = {
     '新增': AddFocus,
+    'add': AddFocus,
     '移除': RemoveFocus,
-    '列表': Focusing
+    'del': RemoveFocus,
+    '列表': Focusing,
+    'list': Focusing
 }
