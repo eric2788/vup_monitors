@@ -25,9 +25,11 @@ const DEFAULT_CONFIG = {
     },
     "source": "websocket",
     "owners": [],
+    "accept_gadmin_command": false,
     "enable_live_broadcast": false,
     "show_cover": true,
     "show_gift_danmu": false,
+    "show_image_danmu": false,
     "auto_check_update": true,
     "show_detail_list": true,
     "debug_mode": false

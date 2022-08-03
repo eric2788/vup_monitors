@@ -7,7 +7,7 @@ const FormData = require('form-data')
 const { MessageSource } = require('../types')
 const { handleMessage } = require('../message-handler');
 
-const IDENTIFIER = 'vup_monitors'
+const IDENTIFIER = websocket['id'] ?? 'vup_monitors'
 
 class WebSocketSource extends MessageSource {
 
