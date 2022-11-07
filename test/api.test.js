@@ -1,10 +1,14 @@
 const assert = require('assert')
-const { default: axios } = require('axios')
+const axios = require('axios')
 
 const api = axios.create({
     headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36'
     }
+})
+
+const antiCrawler = axios.create({
+    headers: {}
 })
 
 describe('B站API測試', () => {
@@ -19,7 +23,7 @@ describe('B站API測試', () => {
         assert.equal(res.data.code, -404)
     })
     it('測試B站反爬蟲', async () => {
-        const res = await axios.get('https://api.bilibili.com/x/space/acc/info?mid=1&jsonp=jsonp')
+        const res = await antiCrawler.get('https://api.bilibili.com/x/space/acc/info?mid=1&jsonp=jsonp')
         console.log(res.data)
         assert.equal(res.status, 200)
         assert.equal(res.data.code, -401)
