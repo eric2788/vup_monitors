@@ -20,6 +20,7 @@ describe('B站API測試', () => {
     })
     it('測試B站反爬蟲', async () => {
         const res = await axios.get('https://api.bilibili.com/x/space/acc/info?mid=1&jsonp=jsonp')
+        console.log(res.data)
         assert.equal(res.status, 200)
         assert.equal(res.data.code, -401)
         assert.notEqual(res.data?.data?.ga_data, undefined)
