@@ -24,10 +24,11 @@ class AddUser extends CommandExecutor {
             return
         }
 
-        const username = await validUser(uid)
-        if (!username) {
-            await send(`找不到用户 ${uid}`)
-            return
+        const res = await validUser(uid)
+        if (res.msg) await send(res.msg(uid))
+        if (!res.pass) return
+        if (!res.name){
+            res.name = '未知'
         }
 
         if (!is_group && args[1]) { // 不是群聊發送，但是有輸入 [群 id]
@@ -41,14 +42,14 @@ class AddUser extends CommandExecutor {
         // variables
         let id = group_id
         let key = KEY_GROUP
-        let inside = `用户 ${username}(${uid}) 已在群 ${group_id} 的高亮名单内。`
-        let added = `用户 ${username}(${uid}) 已新增到群 ${group_id} 的高亮名单。`
+        let inside = `用户 ${res.name}(${uid}) 已在群 ${group_id} 的高亮名单内。`
+        let added = `用户 ${res.name}(${uid}) 已新增到群 ${group_id} 的高亮名单。`
 
         if (!group_id) {  // in private
             id = data.sender.user_id
             key = KEY_PRIVATE
-            inside = `用户  ${username}(${uid}) 已在你的高亮名单内。`
-            added = `用户  ${username}(${uid}) 已新增到你的高亮名单。`
+            inside = `用户  ${res.name}(${uid}) 已在你的高亮名单内。`
+            added = `用户  ${res.name}(${uid}) 已新增到你的高亮名单。`
         }
 
         if (!blive[key]) {

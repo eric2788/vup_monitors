@@ -17,14 +17,15 @@ class BLiveListen extends CommandExecutor {
             return
         }
 
-        const realRoom = await validRoom(room)
-        if (realRoom == -1) {
-            await send(`找不到房间 ${room}`)
-            return
+        const res = await validRoom(room)
+        if (res.msg) await send(res.msg(room))  
+        if (!res.pass) return
+        if (!res.room) {
+            res.room = room
         }
 
-        const result = await messager.listen(realRoom)
-        const msg = result ? `已成功启动监听房间(${realRoom})` : `该房间已启动监听(${realRoom})`
+        const result = await messager.listen(res.room)
+        const msg = result ? `已成功启动监听房间(${res.room})` : `该房间已启动监听(${res.room})`
         await send(msg)
     }
 
