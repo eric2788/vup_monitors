@@ -35,7 +35,7 @@ module.exports = async ({ws, http}, data) => {
         return
     }
 
-    const {name: uname, msg } = await validUser(uid)
+    let { name: uname, msg } = await validUser(uid)
     if (msg) console.warn(`解析用戶 ${uid} 的名稱時發生錯誤: ${msg(uid)}`)
     if (!uname){ // cannot fetch username
         uname = `(UID: ${uid})`
