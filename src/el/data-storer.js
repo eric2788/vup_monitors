@@ -20,16 +20,17 @@ const DEFAULT_CONFIG = {
         "database": 0
     },
     "websocket": {
+        "id": "vup_monitors",
         "host": "blive.ericlamm.xyz",
         "use-tls": true
     },
     "source": "websocket",
     "owners": [],
-    "accept_gadmin_command": false,
+    "accept_gadmin_command": true,
     "enable_live_broadcast": false,
     "show_cover": true,
     "show_gift_danmu": false,
-    "show_image_danmu": false,
+    "show_image_danmu": true,
     "auto_check_update": true,
     "show_detail_list": true,
     "debug_mode": false

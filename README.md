@@ -140,14 +140,17 @@ B站直播WS讯息监控指令
     // websocket 数据源
     // 使用 blive.ericlamm.xyz 可贡献统计数据
     "websocket": {
+        "id": "vup_monitors", // 支持不同ID以支援多个实例
         "host": "blive.ericlamm.xyz",
         "use-tls": true
     },
     "source": "websocket", // 数据源选择 websocket, redis
     "owners": [], // 管理员 QQ 号，列表内的 qq 号可绕过房管限制
+    "accept_gadmin_command": true, // 是否接受群管使用指令
     "enable_live_broadcast": false, // 启用开播通知
     "show_cover": true, // 开播通知时是否显示封面
     "show_gift_danmu": false, // 是否显示礼物弹幕
+    "show_image_danmu": true, // 是否显示表情包弹幕
     "auto_check_update": true, // 是否自动每天检查更新
     "show_detail_list": true, // 显示高亮/直播/注视列表时是否顺带显示用户名称(需要更多时间刷取)
     "debug_mode": false // 是否啟用 debug 模式
