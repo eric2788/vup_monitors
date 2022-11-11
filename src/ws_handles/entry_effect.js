@@ -35,7 +35,11 @@ module.exports = async ({ws, http}, data) => {
         return
     }
 
-    const uname = await validUser(uid)
+    let { name: uname, msg } = await validUser(uid)
+    if (msg) console.warn(`解析用戶 ${uid} 的名稱時發生錯誤: ${msg(uid)}`)
+    if (!uname){ // cannot fetch username
+        uname = `(UID: ${uid})`
+    }
     const messages =  `噔噔咚！你所关注的大航海用户 ${uname} 进入了` + (uname == liveName ? `自己` : ` ${liveName} `) + `的直播间。`
 
     // === 广播到群聊 ===

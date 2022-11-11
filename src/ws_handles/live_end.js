@@ -1,7 +1,6 @@
 const { sendMessage, sendMessagePrivate, filterAndBroadcast } = require("../el/utils")
 const storer = require('../el/data-storer')
 const settings = storer.settings
-const { send } = require("../bot/http")
 
 module.exports = async ({ws, http}, data) => {
     if (!settings.enable_live_broadcast) return // 沒啟用廣播
@@ -17,10 +16,8 @@ module.exports = async ({ws, http}, data) => {
             const users = focus_users[group_id]
             // 没有注视用户，则全部广播，
             if (!users || users.length == 0) return true
-            // 那个用户正是那个群的注视用户，所以所有DD行为都要广播
-            if (users.includes(uid)) return true
-            // 否则，只检查注视用户的直播间
-            return users.includes(data.live_info.uid)
+            // 否則檢查開播用戶是否注視用戶
+            return users.includes(uid)
         })
     }
 

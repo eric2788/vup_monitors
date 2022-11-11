@@ -35,7 +35,7 @@ describe('cachedb 資料庫讀寫測試', () => {
         await utils.sleep(1000)
         const res2 = await cachedb.getRoom(545)
         console.log(res2)
-        assert(res === res2.room_id, '離線讀取房間失敗')
+        assert(res.room === res2.room_id, '離線讀取房間失敗')
     })
 
     it('讀取用戶', async () => {
@@ -44,7 +44,7 @@ describe('cachedb 資料庫讀寫測試', () => {
         await utils.sleep(1000)
         const res2 = await cachedb.getUser(15641218)
         console.log(res2)
-        assert(res === res2.name, '離線讀取用戶失敗')
+        assert(res.name === res2.name, '離線讀取用戶失敗')
     })
 
     it('更新資料', async () => {

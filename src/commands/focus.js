@@ -22,12 +22,6 @@ class AddFocus extends CommandExecutor {
             return
         }
 
-        const valid = await validUser(uid)
-        if (!valid) {
-            await send(`找不到用户 ${uid}`)
-            return
-        }
-
         if (!isGroup) {
             const group_id = Number.parseInt(args[1])
             if (!group_id) {
@@ -37,10 +31,11 @@ class AddFocus extends CommandExecutor {
             data.group_id = group_id
         }
 
-        const username = await validUser(uid)
-        if (!username) {
-            await send(`找不到用户 ${uid}`)
-            return
+        const res = await validUser(uid)
+        if (res.msg) await send(res.msg(uid))
+        if (!res.pass) return
+        if (!res.name){
+            res.name = '未知'
         }
 
         const json = await storer.read()
@@ -57,14 +52,14 @@ class AddFocus extends CommandExecutor {
         }
 
         if (focus_users[data.group_id].includes(uid)) {
-            await send(`用户 ${username}(${uid}) 已经在群 ${data.group_id} 的注视用户名单内。`)
+            await send(`用户 ${res.name}(${uid}) 已经在群 ${data.group_id} 的注视用户名单内。`)
             return
         }
 
         focus_users[data.group_id].push(uid)
 
         storer.save(json)
-        await send(`已成功添加用户 ${username}(${uid}) 到群 ${data.group_id} 的注视用户名单内。`)
+        await send(`已成功添加用户 ${res.name}(${uid}) 到群 ${data.group_id} 的注视用户名单内。`)
 
     }
 }
@@ -114,11 +109,11 @@ class RemoveFocus extends CommandExecutor {
         const list = focus_users[data.group_id]
         const index = list.indexOf(uid)
 
-        if (index == -1){
+        if (index == -1) {
             await send(`用户 ${uid} 不在群 ${data.group_id} 的注视用户名单内。`)
             return
         }
-        
+
         list.splice(index, 1)
 
         storer.save(json)
@@ -129,13 +124,13 @@ class RemoveFocus extends CommandExecutor {
 class Focusing extends CommandExecutor {
 
 
-    async execute({ send, data }, args){
+    async execute({ send, data }, args) {
         const json = await storer.read()
         const focus_users = json?.blive?.focus_users ?? {}
 
-        if (data.message_type !== 'group'){
+        if (data.message_type !== 'group') {
             const group_id = Number.parseInt(args[0])
-            if (!group_id){
+            if (!group_id) {
                 await send('不是一个有效的群ID')
                 return
             }
@@ -146,12 +141,12 @@ class Focusing extends CommandExecutor {
 
         const displays = []
 
-        if (storer.settings.show_detail_list){
+        if (storer.settings.show_detail_list) {
             await send(`正在刷取群 ${data.group_id} 的注视用户资讯，可能需要几分钟...`)
         }
 
-        for (const uid of focusing){
-            if (storer.settings.show_detail_list){
+        for (const uid of focusing) {
+            if (storer.settings.show_detail_list) {
                 try {
                     const user = await level.getUser(uid)
                     if (user) {
@@ -164,7 +159,7 @@ class Focusing extends CommandExecutor {
                     console.warn(`獲取用戶資訊錯誤: ${err}`)
                     displays.push(`${uid}`)
                 }
-            }else{
+            } else {
                 displays.push(`${uid}`)
             }
         }
@@ -175,6 +170,9 @@ class Focusing extends CommandExecutor {
 
 module.exports = {
     '新增': AddFocus,
+    'add': AddFocus,
     '移除': RemoveFocus,
-    '列表': Focusing
+    'del': RemoveFocus,
+    '列表': Focusing,
+    'list': Focusing
 }
