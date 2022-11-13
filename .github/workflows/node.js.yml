@@ -22,6 +22,10 @@ jobs:
       uses: docker/setup-qemu-action@v1
     - name: install dependencies
       run: npm install
+    - name: change version of package json
+      uses: jaywcjlove/github-action-package@main
+      with:
+        version: ${{ github.ref_name }}
     - name: building executable
       run: |
         npm install pkg -g
@@ -29,11 +33,9 @@ jobs:
     - name: zip the directory
       run: |
         zip -r ${{ env.artifact_name }}.zip ./dist
-    
     - name: Get release
       id: get_release
       uses: bruceadams/get-release@v1.2.3
-
     - name: Upload Release
       id: upload-release-zip
       uses: actions/upload-release-asset@v1
