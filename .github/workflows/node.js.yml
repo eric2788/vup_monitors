@@ -22,10 +22,6 @@ jobs:
       uses: docker/setup-qemu-action@v1
     - name: install dependencies
       run: npm install
-    - name: change version of package json
-      uses: jaywcjlove/github-action-package@main
-      with:
-        version: ${{ github.ref_name }}
     - name: building executable
       run: |
         npm install pkg -g
