@@ -39,10 +39,20 @@ module.exports = {
     sleep: async (ms) => new Promise((res,) => setTimeout(res, ms)),
 
     sendMessage: async (ctx, group_id, message) => {
-        await ctx.send('send_group_msg', {
-            group_id,
-            message: message instanceof Array ? message.join('\n') : message
-        })
+        let idx = String(group_id).indexOf('-')
+        if (idx == -1) {
+            await ctx.send('send_group_msg', {
+                group_id,
+                message: message instanceof Array ? message.join('\n') : message
+            })
+        } else {
+            let guild_id = String(group_id).substring(0,idx)
+            let channel_id = String(group_id).substring(idx+1)            
+            await ctx.send('send_guild_channel_msg', {
+                guild_id, channel_id,
+                message: message instanceof Array ? message.join('\n') : message
+            })
+        }
     },
 
     sendMessagePrivate: async (ctx, user_id, message) => {
