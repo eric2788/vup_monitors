@@ -9,7 +9,7 @@ const api = axios.create({
 
 describe('B站API測試', () => {
     it('測試用戶ID是否存在', async () => {
-        const res = await api.get('https://api.bilibili.com/x/space/acc/info?mid=1&jsonp=jsonp')
+        const res = await api.get('https://api.bilibili.com/x/space/acc/info?mid=2&jsonp=jsonp')
         assert.equal(res.status, 200)
         assert.equal(res.data.code, 0)
     })
@@ -22,7 +22,6 @@ describe('B站API測試', () => {
         const res = await api.get('https://api.bilibili.com/x/space/acc/info?mid=1&jsonp=jsonp', {
             headers: {}
         })
-        console.log(res.data)
         assert.equal(res.status, 200)
         // 有时候没有设置 user-agent 也能正常返回消息，因此无法测试
         // assert.equal(res.data.code, -401)

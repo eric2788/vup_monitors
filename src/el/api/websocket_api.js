@@ -50,7 +50,8 @@ class WebSocketSource extends MessageSource {
         const form = new FormData()
         form.append('subscribes', room)
         try {
-            await this.api.put('/subscribe/add', form, { headers: form.getHeaders() })
+            const res = await this.api.put('/subscribe/add', form, { headers: form.getHeaders() })
+            console.debug('PUT /subscribe/add => ', res.data)
         }catch(err){
             throw new Error(err?.response?.data?.error ?? err?.response?.data ?? err)
         }
@@ -61,7 +62,8 @@ class WebSocketSource extends MessageSource {
         const form = new FormData()
         form.append('subscribes', room)
         try {
-            await this.api.put('/subscribe/remove', form, { headers: form.getHeaders() })
+            const res = await this.api.put('/subscribe/remove', form, { headers: form.getHeaders() })
+            console.debug('PUT /subscibe/remove => ', res.data)
         }catch(err){
             throw new Error(err?.response?.data?.error ?? err?.response?.data ?? err)
         }
@@ -75,7 +77,8 @@ class WebSocketSource extends MessageSource {
         }
         try {
             // 透過調用 ?validate=false 來略過房間訊息檢查以防止412請求頻繁
-            await this.api.post('/subscribe?validate=false', form, { headers: form.getHeaders() })
+            const result = await this.api.post('/subscribe?validate=false', form, { headers: form.getHeaders() })
+            console.debug('POST /subscribe => ', result.data)
         }catch(err){
             throw new Error(err?.response?.data?.error ?? err?.response?.data ?? err)
         }
