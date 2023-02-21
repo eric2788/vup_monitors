@@ -49,7 +49,7 @@ async function testUnListen() {
 // 獲取真實房間號
 async function testRequestWithoutCors() {
     const api = axios.create({
-        baseURL: 'https://blive-jp.ericlamm.xyz/subscribe',
+        baseURL: 'https://blive.ericlamm.xyz/subscribe',
         timeout: 5000
     })
     const form = new FormData()

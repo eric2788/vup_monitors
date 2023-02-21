@@ -13,6 +13,8 @@ const superchat_msg = require('./ws_handles/superchat_msg')
 const entry_effect = require('./ws_handles/entry_effect')
 const live_broadcast = require('./ws_handles/live_broadcast')
 const live_end = require('./ws_handles/live_end')
+const user_toast_msg = require('./ws_handles/user_toast_msg')
+const send_gift = require('./ws_handles/send_gift')
 
 class Help extends CommandExecutor {
 
@@ -41,6 +43,8 @@ module.exports = {
     'INTERACT_WORD': room_enter,
     'ENTRY_EFFECT': entry_effect,
     'LIVE': live_broadcast,
-    'PREPARING': live_end
+    'PREPARING': live_end,
+    'USER_TOAST_MSG': user_toast_msg,
+    'SEND_GIFT': send_gift
   }
 }
