@@ -13,7 +13,7 @@ function handleMessage(string){
         if (exception.has(message.command)) return
         const handle = config.ws_handles[message.command]
         if (!handle){
-            console.log(`找不到指令 ${message.command} 的处理，已略过`)
+            console.debug(`找不到指令 ${message.command} 的处理，已略过`)
             exception.add(message.command)
             return
         }

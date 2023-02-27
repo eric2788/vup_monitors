@@ -1,7 +1,7 @@
 const { default: axios } = require('axios')
 const semver = require('semver');
 
-const VERSION = '0.1.11'
+const VERSION = '0.1.13'
 
 const updaterApi = axios.create({
     baseURL: 'https://api.github.com/repos/eric2788/vup_monitors',
