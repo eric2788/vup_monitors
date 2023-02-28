@@ -33,7 +33,8 @@ const DEFAULT_CONFIG = {
     "show_image_danmu": true,
     "auto_check_update": true,
     "show_detail_list": true,
-    "debug_mode": false
+    "debug_mode": false,
+    "disabled_commands": [],
 }
 
 

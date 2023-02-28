@@ -166,7 +166,16 @@ B站直播WS讯息监控指令
     "show_image_danmu": true, // 是否显示表情包弹幕
     "auto_check_update": true, // 是否自动每天检查更新
     "show_detail_list": true, // 显示高亮/直播/注视列表时是否顺带显示用户名称(需要更多时间刷取)
-    "debug_mode": false // 是否啟用 debug 模式
+    "debug_mode": false, // 是否啟用 debug 模式
+    "disabled_commands": [ // 禁用的广播
+        // "DANMU_MSG", // 弹幕消息
+        // "SEND_GIFT", // 赠送礼物
+        // "USER_TOAST_MSG", // 上舰
+        // "SUPER_CHAT_MESSAGE", // 发送SC
+        // "ENTRY_EFFECT", // 大航海用户进入直播间
+        // "INTERACT_WORD", // 进入直播间
+        // "LIVE", // 开播
+    ], 
 }
 ```
 

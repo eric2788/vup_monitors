@@ -1,3 +1,4 @@
+const { disabled_commands } = require('./data-storer').settings
 const exception = new Set()
 
 function handleMessage(string){
@@ -14,6 +15,10 @@ function handleMessage(string){
         const handle = config.ws_handles[message.command]
         if (!handle){
             console.debug(`找不到指令 ${message.command} 的处理，已略过`)
+            exception.add(message.command)
+            return
+        } else if (disabled_commands.includes(message.command)) {
+            console.debug(`指令 ${message.command} 已被禁用，已略过。`)
             exception.add(message.command)
             return
         }
