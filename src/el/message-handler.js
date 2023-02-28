@@ -1,4 +1,4 @@
-const { disabled_commands } = require('../data-storer').settings
+const { disabled_commands } = require('./data-storer').settings
 const exception = new Set()
 
 function handleMessage(string){
