@@ -18,11 +18,11 @@ async function executeCommands(data) {
 }
 
 const { owners, accept_gadmin_command, auto_check_update } = require('./el/data-storer').settings
-console.log(`已设置管理员QQ号: ${owners}。`)
+console.log(`已设置Bot管理员QQ号: ${owners}。`)
 if (accept_gadmin_command) {
-  console.log(`群管和管理员都可使用指令。`)
+  console.log(`群管理和Bot管理员都可以使用指令。`)
 } else {
-  console.log(`仅管理员可使用指令。`)
+  console.log(`仅Bot管理员可以使用指令。`)
 }
 
 // 同时启动 Redis 和 WS 监控

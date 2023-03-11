@@ -26,6 +26,7 @@ const DEFAULT_CONFIG = {
     },
     "source": "websocket",
     "owners": [],
+    "identifier": "",
     "accept_gadmin_command": true,
     "enable_live_broadcast": false,
     "show_cover": true,

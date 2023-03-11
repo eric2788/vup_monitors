@@ -5,6 +5,20 @@ const { commands } = require('./config')
 module.exports = async({data, ws, http}) => {
     if (!data.message) return
     if (data.message[0] !== '!') return // 指令用 ! 开头
+    let sharpPos = data.message.indexOf('#')
+    if (settings.identifier && settings.identifier.length > 0) {  // 如果配置了identifier
+        if (sharpPos == -1) {                                     // 此时如果没有#则忽略
+            return
+        } else {                                                  // 有#则检查identifier是否一致
+            if (data.message.substring(sharpPos+1).trim() != settings.identifier) {
+                return                                            // 不一致则忽略
+            }
+        }
+    } else {                                                      // 如果没有配置identifier
+        if (sharpPos != -1) {                                     // 此时如果有#则忽略
+            return
+        }
+    }
 
     const is_group = data.message_type === 'group'
 
@@ -17,7 +31,7 @@ module.exports = async({data, ws, http}) => {
         return // no permission
     }
 
-    const msg = data.message.substring(1).trim()
+    const msg = data.message.substring(1, sharpPos == -1 ? 5000 : sharpPos).trim() // QQ消息长度不会超过4500，偷懒了
     const command = msg.split(' ')
     const [cmd, ...args] = command
 
