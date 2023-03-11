@@ -83,7 +83,7 @@ const actions = {
 
     save: (data) => {
         try {
-            writeFileSync(PATH, JSON.stringify(data))
+            writeFileSync(PATH, JSON.stringify(data, null, 4))
             actions.clearCache()
             console.log(`离线数据储存已更新。`)
         }catch(err){
