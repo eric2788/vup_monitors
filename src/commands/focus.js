@@ -3,6 +3,8 @@ const storer = require('../el/data-storer')
 const { validUser } = require('../el/utils');
 const level = require('../el/cachedb')
 
+const GROUP_REGEXP = new RegExp(/\d+[-]?\d+$/)
+
 class AddFocus extends CommandExecutor {
 
     async execute({ send, data }, args) {
@@ -23,9 +25,9 @@ class AddFocus extends CommandExecutor {
         }
 
         if (!isGroup) {
-            const group_id = Number.parseInt(args[1])
-            if (!group_id) {
-                await send('不是一个有效的群ID')
+            const group_id = String(args[1])
+            if (!GROUP_REGEXP.test(group_id)) {
+                await send(`${group_id} 不是一个有效的群ID`)
                 return
             }
             data.group_id = group_id
@@ -84,9 +86,9 @@ class RemoveFocus extends CommandExecutor {
         }
 
         if (!isGroup) {
-            const group_id = Number.parseInt(args[1])
-            if (!group_id) {
-                await send('不是一个有效的群ID')
+            const group_id = String(args[1])
+            if (!GROUP_REGEXP.test(group_id)) {
+                await send(`${group_id} 不是一个有效的群ID`)
                 return
             }
             data.group_id = group_id
@@ -129,9 +131,9 @@ class Focusing extends CommandExecutor {
         const focus_users = json?.blive?.focus_users ?? {}
 
         if (data.message_type !== 'group') {
-            const group_id = Number.parseInt(args[0])
-            if (!group_id) {
-                await send('不是一个有效的群ID')
+            const group_id = String(args[0])
+            if (!GROUP_REGEXP.test(group_id)) {
+                await send(`${group_id} 不是一个有效的群ID`)
                 return
             }
             data.group_id = group_id
