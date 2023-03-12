@@ -5,6 +5,7 @@ const level = require('../el/cachedb')
 
 const KEY_GROUP = 'highlight'
 const KEY_PRIVATE = 'highlight_private'
+const GROUP_REGEXP = new RegExp(/\d+[-]?\d+$/)
 
 class AddUser extends CommandExecutor {
 
@@ -32,7 +33,11 @@ class AddUser extends CommandExecutor {
         }
 
         if (!is_group && args[1]) { // 不是群聊發送，但是有輸入 [群 id]
-            data.group_id = Number.parseInt(args[1])
+            data.group_id = String(args[1])
+            if (!GROUP_REGEXP.test(data.group_id)) {
+                await send(`${data.group_id} 不是一个有效的群ID`)
+                return
+            }
         }
 
         const group_id = data.group_id
@@ -94,7 +99,11 @@ class RemoveUser extends CommandExecutor {
         }
 
         if (!is_group && args[1]) { // 不是群聊發送，但是有輸入 [群 id]
-            data.group_id = Number.parseInt(args[1])
+            data.group_id = String(args[1])
+            if (!GROUP_REGEXP.test(data.group_id)) {
+                await send(`${data.group_id} 不是一个有效的群ID`)
+                return
+            }
         }
 
         const group_id = data.group_id
@@ -154,7 +163,11 @@ class HighLighting extends CommandExecutor {
         const is_group = data.message_type === 'group'
 
         if (!is_group && args[0]) {
-            data.group_id = Number.parseInt(args[0])
+            data.group_id = String(args[0])
+            if (!GROUP_REGEXP.test(data.group_id)) {
+                await send(`${data.group_id} 不是一个有效的群ID`)
+                return
+            }
         }
 
         const json = await storer.read()

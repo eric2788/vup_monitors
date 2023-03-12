@@ -1,10 +1,10 @@
 # Vup Monitors
 
-基于 go-cqhttp 和 nodejs 的 Vups 直播間監控機器人，支援多群使用和私人广播
+基于 go-cqhttp 和 nodejs 的 Vups 直播间监控机器人，支持多群使用和私人广播
 
 ![showcase](/assets/dd_showcase.png)
 
-#### 目前支援监控的DD行为
+#### 目前支持监控的DD行为
 
 - 进入直播间
 - 发送SC
@@ -26,7 +26,7 @@
 
 - 运行 `go-cqhttp`, 根据提示填写 QQ 号和密码等信息, 参考文档 https://docs.go-cqhttp.org/guide/quick_start.html
 
-- 啟用正向 Websocket (这点很重要，不然之后无法连接到 go-cqhttp)
+- 启用正向 Websocket (这点很重要，不然之后无法连接到 go-cqhttp)
 
 ### biligo-live-ws
 
@@ -49,18 +49,18 @@
 
 - 到 `data/settings.json` 填入设定，包括
     - 设定数据源 `source` 为 `websocket`
-    - websocket 中 填入你自架的 biligo-live-ws 或使用 公共API地址 (如果使用公共API，則需要 `use-tls: true`)
+    - websocket 中 填入你自架的 biligo-live-ws 或使用 公共API地址 (如果使用公共API，则需要 `use-tls: true`)
     - 在管理员 `owners` 的设定中添加你的 QQ 号
     - 填入你在 go-cqhttp 中启用正向 Websocket 的端口 (如非6700)
 
 - 再运行程序
 
-- 开始透过指令设定监控和高亮
+- 开始通过指令设定监控和高亮
 
 
 #### 除了 biligo-live-ws 以外的运行方式
 
-- [blive-redis-server](https://github.com/eric2788/blive-redis-server) + [redis](https://www.redis.com.cn/redis-installation.html) 伺服器 (比较麻烦)
+- [blive-redis-server](https://github.com/eric2788/blive-redis-server) + [redis](https://www.redis.com.cn/redis-installation.html) 服务器 (比较麻烦)
 
     运行 blive-redis-server 和 redis，然后在 `data/settings.json` 设定数据源为 `redis` 即可 
 
@@ -107,11 +107,11 @@ B站直播WS讯息监控指令
 
 ### !注视名单
 
-透过设置群注视名单，可以在广播时限制仅限在注视用户的直播间内/注视用户本人的所有DD行为。
+通过设置群注视名单，可以在广播时限制仅限在注视用户的直播间内/注视用户本人的所有DD行为。
 
 ```log
-- 由于注视用户不支援私聊，因此在私聊使用此指令时必须添加群id
-- 如果在群添加注视用户，则无需填入群id，並以该群作为添加/删除对象
+- 由于注视用户不支持私聊，因此在私聊使用此指令时必须添加群id
+- 如果在群添加注视用户，则无需填入群id，并以该群作为添加/删除对象
 ```
 
 - `!注视 新增 <用户id> <群id(如私聊)>` - 新增该群注视用户
@@ -153,12 +153,13 @@ B站直播WS讯息监控指令
     // websocket 数据源
     // 使用 blive.ericlamm.xyz 可贡献统计数据
     "websocket": {
-        "id": "vup_monitors", // 支持不同ID以支援多个实例
+        "id": "vup_monitors", // 辨识ID，详见下面“多实例使用”部分
         "host": "blive.ericlamm.xyz",
         "use-tls": true
     },
     "source": "websocket", // 数据源选择 websocket, redis
-    "owners": [], // 管理员 QQ 号，列表内的 qq 号可绕过房管限制
+    "owners": [], // 管理员QQ号，列表内的QQ号可绕过房管限制
+    "identifier": "", // 多实例识别符，详见下面“多实例使用”部分
     "accept_gadmin_command": true, // 是否接受群管使用指令
     "enable_live_broadcast": false, // 启用开播通知
     "show_cover": true, // 开播通知时是否显示封面
@@ -166,7 +167,7 @@ B站直播WS讯息监控指令
     "show_image_danmu": true, // 是否显示表情包弹幕
     "auto_check_update": true, // 是否自动每天检查更新
     "show_detail_list": true, // 显示高亮/直播/注视列表时是否顺带显示用户名称(需要更多时间刷取)
-    "debug_mode": false, // 是否啟用 debug 模式
+    "debug_mode": false, // 是否启用 debug 模式
     "disabled_commands": [ // 禁用的广播
         // "DANMU_MSG", // 弹幕消息
         // "SEND_GIFT", // 赠送礼物
@@ -178,6 +179,31 @@ B站直播WS讯息监控指令
     ], 
 }
 ```
+
+### 多实例使用
+
+分为两种场景：多实例共用同一个biligo-live-ws实例，以及多实例共用同一个go-cqhttp
+
+#### 共用同一个biligo-live-ws
+根据 [biligo-live-ws的说明](https://github.com/eric2788/biligo-live-ws#使用方式) ，同一IP下的实例需要配置不同的辨识ID以避免混淆
+
+因此如果要在同一IP下部署多个实例同时使用同一个biligo-live-ws作为数据源，则应在设置中为每个实例指定不同的辨识ID（不指定时默认为vup_monitors）
+
+#### 共用同一个go-cqhttp
+多个实例共用同一个go-cqhttp时，因为前端的QQ号码是同一个，因此会同时响应命令，造成使用上的困难
+
+此时应在设置中为每个实例指定不同的多实例识别符，配置后bot将只响应以``#[多实例识别符]``结尾的命令，以此达到准确控制特定实例的效果
+
+此时命令形式将变为形如`!B站直播 监听中 #abc`的格式，具体逻辑如下
+
+| 多实例识别符 | 命令 | 响应 |
+| ------- | ----- | ----- |
+| 未配置 | 不带# | ✔ |
+| 未配置 | 带有# | ✖ |
+| 配置为abc | 不带# | ✖ |
+| 配置为abc | 以#abc结束 | ✔ |
+| 配置为abc | 以#xyz结束 | ✖ |
+
 
 ## 统计数据
 
